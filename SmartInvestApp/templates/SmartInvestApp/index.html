@@ -119,7 +119,15 @@
               <h6 class="mb-10">GAIN TOTAL</h6>
               <h3 class="text-bold mb-10" style="color: #2cef0e;">{{user.solde}} XAF</h3>
               <p class="text-sm text-success">
+                
+                {% if user.contrat_courant %}
                 <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{ user.contrat_courant.Montant|calculer_pourcentage:user.contrat_courant.pourcentage }} XAF
+                  
+                {% else %}
+                <i class='bx bx-up-arrow-alt bx-fade-up'></i> +0 XAF
+                  
+                {% endif %}
+                  
                 <span class="text-gray">Bientot</span>
               </p>
             </div>
@@ -383,17 +391,7 @@
             <div class="left">
               <h6 class="text-medium mb-30">HISTORIQUE DES TRANSACTIONS</h6>
             </div>
-            <div class="right">
-              <div class="select-style-1">
-                <div class="select-position select-sm">
-                  <select class="light-bg">
-                    <option value="">RETRAITS</option>
-                    <option value="">ACHATS</option>
-                  </select>
-                </div>
-              </div>
-              <!-- end select -->
-            </div>
+            
           </div>
           <!-- End Title -->
           <div class="table-responsive">
@@ -418,11 +416,7 @@
                       STATUT <i class="lni lni-arrows-vertical"></i>
                     </h6>
                   </th>
-                  <th>
-                    <h6 class="text-sm text-medium text-end">
-                      ACTIONS <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -462,30 +456,7 @@
                   {% endif %}
 
 
-                  <td>
-                    {% if not trans.valide and not trans.en_attente %}
-                    <div class="action justify-content-end">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
-                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="lni lni-more-alt"></i>
-                      </button>
-
-
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">RETANTER</a>
-                        </li>
-
-                      </ul>
-
-
-
-                    </div>
-                    {% endif %}
-                  </td>
+                  
                 </tr>
                 {% endfor %}
 
@@ -577,7 +548,7 @@
           backgroundColor: "#f9f9f9",
           title: {
             fontFamily: "Plus Jakarta Sans",
-            color: "#8F92A1",
+            color: "#30C000",
             fontSize: 12,
           },
           body: {
@@ -681,7 +652,7 @@
               return label;
             },
           },
-          backgroundColor: "#F3F6F8",
+          backgroundColor: "#07B00D",
           titleAlign: "center",
           bodyAlign: "center",
           titleFont: {

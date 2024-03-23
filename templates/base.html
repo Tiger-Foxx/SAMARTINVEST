@@ -456,30 +456,6 @@
     <script src="{% static 'assets/js/polyfill.js' %}"></script>
     <script src="{% static 'assets/js/main.js' %}"></script>
 
-    <script>
-
-        // Sélectionner le menu déroulant
-        var selectElement = document.querySelector('#select');
-      
-        // Ajouter un écouteur d'événement pour détecter les changements
-        selectElement.addEventListener('change', function(event) {
-          var value = event.target.value;
-          var rows = document.querySelectorAll('table tr'); // Remplacer 'table tr' par le sélecteur correct pour vos lignes de tableau
-      
-          // Boucler sur chaque ligne du tableau
-          rows.forEach(function(row) {
-            var type = row.querySelector('.type-transaction').textContent; // Remplacer '.type-transaction' par le sélecteur correct pour le type de transaction
-            if (value === 'TOUS' || type.toUpperCase().includes(value)) {
-              row.style.display = ''; // Afficher la ligne
-            } else {
-              row.style.display = 'none'; // Cacher la ligne
-            }
-          });
-        });
-     
-      
-    </script>
-  
 
   </body>
   

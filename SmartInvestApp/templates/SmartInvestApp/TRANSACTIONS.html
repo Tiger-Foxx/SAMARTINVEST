@@ -45,15 +45,7 @@
                 <h6 class="text-medium mb-30">HISTORIQUE DES TRANSACTIONS</h6>
               </div>
               <div class="right">
-                <div class="select-style-1">
-                  <div class="select-position select-sm">
-                    <select class="light-bg" id="select">
-                      <option value="TOUS">TOUS</option>
-                      <option value="RETRAITS">RETRAITS</option>
-                      <option value="ACHATS">ACHATS</option>
-                    </select>
-                  </div>
-                </div>
+               
                 <!-- end select -->
               </div>
             </div>
@@ -122,11 +114,15 @@
                       </div>
                     </td>
 
-
+                    {% if trans.contrat  %}
                     <td class="">
-                      <p class="text-sm text-red type-transaction" style="color: #de9307;text-transform:uppercase">{{trans.Type}}</p>
+                      <b><p class="text-sm text-red type-transaction" style="color: #07de12;text-transform:uppercase;font-weight:900">{{trans.Type}}</p></b>
                     </td>
-
+                    {% else %}
+                    <td class="">
+                      <b><p class="text-sm text-red type-transaction" style="color: #de2007;text-transform:uppercase;font-weight:900">{{trans.Type}}</p></b>
+                    </td>
+                    {% endif %}
                     
                     {% if trans.contrat  %}
                     <td>

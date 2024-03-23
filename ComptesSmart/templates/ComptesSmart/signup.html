@@ -95,12 +95,20 @@
                      {% if code %}
                        <div class="col-12">
                          <div class="input-style-1">
-                           <label>CODE DU PARRAIN</label>
-                           <input type="text" value="{{code}}" name="codeParrain" id="codeParrain" disabled/>
+                           <label>CODE DU PARRAIN : {{code}} </label>
+                           <input type="text" value="{{code}}" hidden="true" name="codeParrain" id="codeParrain" disabled/>
                          </div>
                        </div>
                        <!-- end col -->
+                       {% else %}
+                       <div class="col-12" hidden="true">
+                        <div class="input-style-1">
+                          <input type="text"  hidden="true" name="codeParrain" id="codeParrain" disabled/>
+                        </div>
+                      </div>
                      {% endif %}
+
+                     
                       
                       <div class="col-12">
                         <div class="input-style-1">

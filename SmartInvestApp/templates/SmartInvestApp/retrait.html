@@ -52,35 +52,70 @@
       </section>
       <!-- ========== section end ========== -->
       <section style="padding: 15px;">
+        <form action="{% url 'retrait' %}" method="post" name="myForm" id="myForm">
+          {% csrf_token %}
         <!-- input style start -->
         <div class="card-style mb-30">
           <h6 class="mb-25">FORMULAIRE DE RETRAIT</h6>
           <div class="input-style-1">
             <label>MONTANT DU RETRAIT(XAF)</label>
-            <input type="number" placeholder="XXXXXXXXX" />
+            <input type="number" name="Montant" onchange="ConvertUSDT()" onkeypress="ConvertUSDT()" placeholder="0000000" required />
           </div>
           <div class="input-style-1">
-            
-            <input type="text" Value="XXXXXX XAF = XXXXX USDT" disabled />
+            <label  id="MontUSDTLabel" style="color:#f5d402"> XXXXXX XAF = XXXXX USDT</label>
+            <input type="text" name="MontantUSDT" id="MontUSDT" hidden="true" placeholder=""  />
           </div>
           <!-- end input -->
           <div class="input-style-1">
             <label>NUMERO BENEFICIAIRE</label>
-            <input type="tel" placeholder="+237..." />
+            <input type="tel" name="Numero" placeholder="+237..." />
           </div>
           <!-- end input -->
-
+            <input type="text" name="" value="{{solde}}" hidden="true"  id="soldeVal">
           <div class="input-style-1">
             <label>ADDRESSE DE PORTE FEUILLE(si en USDT)</label>
-            <input type="tel" placeholder="Si vous voulez retirer en USDT, Entrez la" />
+            <input type="text" name="adresseUSDT" placeholder="Si vous voulez retirer en USDT, Entrez la" />
           </div>
           <!-- end input -->
-          
+          <button type="submit" id="sub" hidden="true"></button>
           <div class="input-style-1">
-            <a href="#0" class="main-btn primary-btn-outline square-btn btn-hover">SOUMETTRE LA DEMANDE</a>
+            <a href="#0" onclick="retirer()" class="main-btn primary-btn-outline square-btn btn-hover">SOUMETTRE LA DEMANDE</a>
           </div>
           <!-- end input -->
         </div>
+      </form>
+
+        <script>
+          function convertirEnNombreFlottant(chaine) {
+            // Remplacer la virgule par un point
+            const nombreAvecPoint = chaine.replace(",", ".");
+          
+            // Convertir la chaîne en nombre à virgule flottante
+            const nombreFlottant = parseFloat(nombreAvecPoint);
+          
+            // Retourner le nombre à virgule flottante
+            return nombreFlottant;
+          }
+          function ConvertUSDT(){
+            prixUSDT=parseFloat("{{prixUSDT}}");
+            document.getElementById('MontUSDT').value=(document.forms["myForm"]["Montant"].value/prixUSDT).toFixed(3);
+
+            document.getElementById('MontUSDTLabel').innerText=document.forms["myForm"]["Montant"].value+" XAF = "+(document.forms["myForm"]["Montant"].value/prixUSDT).toFixed(3)+" USDT";
+          
+          }
+          function retirer(){
+            solde=convertirEnNombreFlottant(document.getElementById('soldeVal').value);
+            montant=document.forms["myForm"]["Montant"].value;
+            if(montant>solde*0.98){
+              alert("Solde Insuffisant !\n Vous ne pouvez retirer que "+(solde*0.98)+" XAF Maximum");
+              
+            }
+            else{
+              document.getElementById('sub').click();
+            }
+            
+          }
+        </script>
         <!-- end card -->
         <!-- ======= input style end ======= -->
       </section>

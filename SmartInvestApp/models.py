@@ -65,6 +65,7 @@ class Information(models.Model):
     BEP20=models.CharField(max_length=130,null=True,blank=True)
     ERC20=models.CharField(max_length=130,null=True,blank=True)
     TRC20=models.CharField(max_length=130,null=True,blank=True)
+    prixUSDT=models.FloatField(default=606.37)
 
     def __str__(self):
         return f"VOS INFORMATIONS "

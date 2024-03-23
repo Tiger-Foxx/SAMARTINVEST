@@ -5,7 +5,7 @@ from ComptesSmart.models import Utilisateur
 from SmartInvestApp.models import *
 import json
 from SmartInvestApp.forms import *
-from SmartInvestApp.utiles import extraire_informations_historique, recuperer_transactions_utilisateur, trouver_contrat_suivant
+from SmartInvestApp.utiles import Verifier, distribuerGains, extraire_informations_historique, recuperer_transactions_utilisateur, trouver_contrat_suivant
 # Create your views here.
 
 
@@ -17,7 +17,7 @@ def intro(request):
 def index(request):
     if not request.user.is_authenticated:
         return redirect('intro')
-    
+    print(request.user.historique_solde.split("#"))
     montants, dates = extraire_informations_historique(request.user.historique_solde)
     montantTransacts, dateTransacts, typeTransacts = recuperer_transactions_utilisateur(request.user.username)
     transactions=Transaction.objects.filter(Auteur=request.user).order_by('date')
@@ -72,7 +72,7 @@ def parrainage(request,nom):
     fieuils=len(Utilisateur.objects.filter(parrain=request.user))
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/parrainage.html',context={'fieuils':fieuils,'notificationss' : notificationss})
+    return render(request,'SmartInvestApp/parrainage.html',context={'fieuils':fieuils,'notificationss' : notificationss,"Messagess" : Messagess})
 
 def notifications(request):
     if not request.user.is_authenticated:
@@ -91,7 +91,6 @@ def messages(request):
         return redirect('connexion')
     Messagess=Message.objects.all().order_by('-date')
     notificationss=Notification.objects.all().order_by('-date')[:4]
-    Messagess=Message.objects.all().order_by('-date') [:5]
     return render(request,'SmartInvestApp/messages.html',context={'Messagess' : Messagess,'notificationss' : notificationss})
 
 def transactions(request):
@@ -101,7 +100,7 @@ def transactions(request):
     transactions=Transaction.objects.all().order_by('-date')
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/TRANSACTIONS.html',context={'transactions' : transactions,'notificationss' : notificationss})
+    return render(request,'SmartInvestApp/TRANSACTIONS.html',context={'transactions' : transactions,'notificationss' : notificationss,"Messagess" : Messagess})
 
 def utilisateurs(request):
     if not request.user.is_superuser:
@@ -109,7 +108,7 @@ def utilisateurs(request):
     utilisateurs=Utilisateur.objects.all().order_by('-date')
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/UTILISATEURS.html',context={'utilisateurs' : utilisateurs,'notificationss' : notificationss})
+    return render(request,'SmartInvestApp/UTILISATEURS.html',context={'utilisateurs' : utilisateurs,'notificationss' : notificationss,"Messagess" : Messagess})
 
 def acheter(request):
     if request.method=="POST":
@@ -133,32 +132,47 @@ def acheter(request):
         return redirect('index')
     if not request.user.is_authenticated:
         return redirect('connexion')
-    contrats=Contrat.objects.all().order_by('-Montant')
+    contrats=Contrat.objects.all().order_by('Montant')
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/AcheterCOntrat.html',context={'contrats' : contrats,'notificationss' : notificationss})
+    return render(request,'SmartInvestApp/AcheterCOntrat.html',context={'contrats' : contrats,'notificationss' : notificationss,"Messagess" : Messagess})
 
 def retrait(request):
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
+    solde=float(request.user.solde)
+    prixUSDT=float(get_object_or_404(Information,id=1).prixUSDT)
     if request.method=="POST":
         PorteFeuille =request.POST.get("adresseUSDT")
-        Montant =request.POST.get("Montant").replace(',','.')
-        MontantUSDT =request.POST.get("MontantUSDT").replace(',','.')
+        Montant =float(request.POST.get("Montant").replace(',','.'))
+        MontantUSDT = float(request.POST.get("MontantUSDT").replace(',','.'))/prixUSDT
         Numero=request.POST.get("Numero")
         Auteur=request.user
         Type='RETRAIT'
+        if PorteFeuille and PorteFeuille!="":
+           transaction= Transaction.objects.create(PorteFeuille=PorteFeuille,Montant=Montant,MontantUSDT=MontantUSDT,Auteur=Auteur,Type=Type)
+        else:
+           transaction= Transaction.objects.create(Montant=Montant,Numero=Numero,Auteur=Auteur,Type=Type)
+        
         return redirect('index')
     if not request.user.is_authenticated:
         return redirect('connexion')
-    return render(request,'SmartInvestApp/retrait.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
+    return render(request,'SmartInvestApp/retrait.html',context={'notificationss' : notificationss,"Messagess" : Messagess,"solde":solde,"prixUSDT":prixUSDT})
 
 def distribuer(request):
     if not request.user.is_superuser:
         return redirect('connexion')
+    Verifier()
+    if request.method=="POST":
+        contrat =request.POST.get("contrat")
+        pourcentage =float(request.POST.get("pourcentage").replace(',','.'))
+        jours=request.POST.get("jours")
+        distribuerGains(pourcentage,jours,contrat)
+        return redirect('index')
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/distribuer.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
+    contrats=Contrat.objects.all().order_by('Montant')
+    return render(request,'SmartInvestApp/distribuer.html',context={'notificationss' : notificationss,"Messagess" : Messagess,"contrats" : contrats})
 
 
 ############# fonctions CRUD ##############
@@ -179,6 +193,7 @@ def validerTransaction(request, id):
         contrat_achete = get_object_or_404(Contrat, Montant=transaction_a_valider.Montant)
         # Mettre à jour le contrat courant de l'utilisateur avec le contrat acheté
         transaction_a_valider.Auteur.contrat_courant = contrat_achete
+        transaction_a_valider.Auteur.date_contrat=datetime.date.today()
         transaction_a_valider.Auteur.save()
     
     elif transaction_a_valider.Type == 'RETRAIT':

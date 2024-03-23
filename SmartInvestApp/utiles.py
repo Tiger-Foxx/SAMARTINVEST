@@ -12,14 +12,18 @@ from SmartInvestApp.models import Notification, Transaction
 def trouver_contrat_suivant(contrats, contrat_courant):
     # Trier les contrats par montant en ordre croissant
     contrats_tries = sorted(contrats, key=lambda c: c.Montant)
-    # Trouver l'index du contrat courant
-    index_courant = contrats_tries.index(contrat_courant)
-    # Vérifier s'il existe un contrat suivant
-    if index_courant < len(contrats_tries) - 1:
-        return contrats_tries[index_courant + 1]
-    else:
-        # Retourner None si le contrat courant est le dernier
-        return None
+    if contrat_courant:
+        
+        # Trouver l'index du contrat courant
+        index_courant = contrats_tries.index(contrat_courant)
+        # Vérifier s'il existe un contrat suivant
+        if index_courant < len(contrats_tries) - 1:
+            return contrats_tries[index_courant + 1]
+        else:
+            # Retourner None si le contrat courant est le dernier
+            return None
+    else :
+        return  contrats_tries[0]
 
 def genererCodeParrainage(longueur=15):
     caracteres = string.ascii_uppercase + string.digits + '_'
@@ -47,7 +51,7 @@ def extraire_informations_historique(historique_solde, nombre_max=15):
     for entree in entrees_historique:
         if entree:  # Vérifier si l'entrée n'est pas vide
             montant, date = entree.split('|')
-            liste_montants.append(int(montant))
+            liste_montants.append(float(montant))
             liste_dates.append(date)
     return liste_montants, liste_dates
 
@@ -75,6 +79,8 @@ def recompenserParrains(utilisateur, n):
         recompense_parrain = (utilisateur.contrat_courant.Montant * utilisateur.contrat_courant.pourcentage / 100) * pourcentage_n
         # Augmenter le solde du parrain
         utilisateur.parrain.solde += recompense_parrain
+        ajout_historique=str(utilisateur.parrain.solde)+"|"+datetime.date.today().strftime("%d-%m-%Y")+"#"
+        utilisateur.parrain.historique_solde+=ajout_historique
         utilisateur.parrain.save()
 
         # Vérifier si le parrain a aussi un parrain (grand-parrain)
@@ -83,11 +89,19 @@ def recompenserParrains(utilisateur, n):
             recompense_grand_parrain = recompense_parrain * 0.04
             # Augmenter le solde du grand-parrain
             utilisateur.parrain.parrain.solde += recompense_grand_parrain
+            ajout_historique=str(utilisateur.parrain.parrain.solde)+"|"+datetime.date.today().strftime("%d-%m-%Y")+"#"
+            utilisateur.parrain.parrain.historique_solde+=ajout_historique
             utilisateur.parrain.parrain.save()
 
 # Exemple d'utilisation de la fonction
 # recompenserParrains(instance_de_utilisateur, 8)
-def distribuer(pourcentage=3.5, jours=0, montant_minimum=0):
+def distribuerGains(pourcentage=3.5, jours=0, montant_minimum=0):
+    try:
+        pourcentage = float(pourcentage.replace(',', '.'))
+        jours = int(jours)
+        montant_minimum = float(montant_minimum.replace(',', '.'))
+    except Exception as e:
+        pass
     # Conversion des paramètres en nombres
     pourcentage = float(pourcentage)
     jours = int(jours)
@@ -107,7 +121,7 @@ def distribuer(pourcentage=3.5, jours=0, montant_minimum=0):
     # Mise à jour du solde des utilisateurs éligibles et création de notifications
     for utilisateur in utilisateurs_eligibles:
         #verifier si c'est le premier contrat du user :
-        if utilisateur.historique_solde.split("#")<3:
+        if len(utilisateur.historique_solde.split("#"))<3:
             recompenserParrains(utilisateur, 8)
        
         montant_bonus = utilisateur.contrat_courant.Montant * pourcentage / 100
@@ -125,7 +139,13 @@ def distribuer(pourcentage=3.5, jours=0, montant_minimum=0):
             texte_notif += "."
         creer_notification(texte_notif)
         
-        
+      
+      
+def Verifier():
+    utilisateurs = Utilisateur.objects.filter(contrat_courant__isnull=False, contrat_expire=False)
+    for utilisateur in utilisateurs:
+        utilisateur.verifier_expiration_contrat()
+  
 
 
 

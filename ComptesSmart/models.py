@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
@@ -37,6 +38,15 @@ class Utilisateur(AbstractUser):
     historique_solde=models.TextField(default="")
     parrain = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, db_constraint=False)
     contrat_expire=models.BooleanField(default=False)
+    from django.utils import timezone
+    from datetime import timedelta
+    def verifier_expiration_contrat(self):
+        if self.contrat_courant and not self.contrat_expire:
+            delta = timezone.now().date() - self.date_contrat
+            if delta.days > 50:
+                self.contrat_expire = True
+                self.contrat_courant = None  # Optionnel: Réinitialiser le contrat courant
+                self.save()
     def __str__(self):
         return f"Utilisateur | nom: {self.nom} | telphone: {self.username}"
 
