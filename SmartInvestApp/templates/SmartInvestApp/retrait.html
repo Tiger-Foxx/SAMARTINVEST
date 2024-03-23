@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>DEMANDE DE RETRAIT</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        RETRAIT
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <section style="padding: 15px;">
+        <div class="col-lg">
+          <div class="card-style mb-30" >
+            <h1 class="mb-15 text-red" style="color:#d2790d">Important !!!</h1>
+            <p spellcheck="true">
+              <span class="text-success text-medium"> Vos demandes de Retraits</span>
+              sont traitees et validees , et vous recevez l'argent au maximum 24H apres la demande, Remplissez correctement le formulaire.
+              
+            </p>
+            </div>
+            </div>
+      </section>
+      <!-- ========== section end ========== -->
+      <section style="padding: 15px;">
+        <!-- input style start -->
+        <div class="card-style mb-30">
+          <h6 class="mb-25">FORMULAIRE DE RETRAIT</h6>
+          <div class="input-style-1">
+            <label>MONTANT DU RETRAIT(XAF)</label>
+            <input type="number" placeholder="XXXXXXXXX" />
+          </div>
+          <div class="input-style-1">
+            
+            <input type="text" Value="XXXXXX XAF = XXXXX USDT" disabled />
+          </div>
+          <!-- end input -->
+          <div class="input-style-1">
+            <label>NUMERO BENEFICIAIRE</label>
+            <input type="tel" placeholder="+237..." />
+          </div>
+          <!-- end input -->
+
+          <div class="input-style-1">
+            <label>ADDRESSE DE PORTE FEUILLE(si en USDT)</label>
+            <input type="tel" placeholder="Si vous voulez retirer en USDT, Entrez la" />
+          </div>
+          <!-- end input -->
+          
+          <div class="input-style-1">
+            <a href="#0" class="main-btn primary-btn-outline square-btn btn-hover">SOUMETTRE LA DEMANDE</a>
+          </div>
+          <!-- end input -->
+        </div>
+        <!-- end card -->
+        <!-- ======= input style end ======= -->
+      </section>
+      {% endblock %}

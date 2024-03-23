@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+      <!-- ========== notification-wrapper start ========== -->
+      <div class="notification-wrapper">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>Notifications</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        Notifications
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <div class="card-style">
+           
+           {% for notif in notificationss %}
+             <div class="single-notification">
+               <div class="checkbox">
+                 <div class="form-check checkbox-style mb-20">
+                   <input class="form-check-input" type="checkbox" value="" id="checkbox-1" />
+                 </div>
+               </div>
+               <div class="notification">
+                 <div class="image success-bg">
+                   <span>A</span>
+                 </div>
+                 <a href="#0" class="content">
+                   <h6>DE L'ADMINISTRATEUR</h6>
+                   <p class="text-sm text-gray">
+                     {{notif.Motif}}
+                   </p>
+                   <span class="text-sm text-medium text-gray">{{notif.date}}</span>
+                 </a>
+               </div>
+              
+             </div>
+           {% endfor %}
+            
+            <!-- end single notification -->
+            
+          </div>
+        </div>
+        <!-- end container -->
+      </div>
+      <!-- ========== notification-wrapper start ========== -->
+      {% endblock %}

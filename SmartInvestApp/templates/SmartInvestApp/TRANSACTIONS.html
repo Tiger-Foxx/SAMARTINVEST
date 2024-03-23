@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- ========== table components start ========== -->
+<section class="table-components">
+  <div class="container-fluid">
+    <!-- ========== title-wrapper start ========== -->
+    <div class="title-wrapper pt-30">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="title">
+            <h2>TRANSACTIONS </h2>
+          </div>
+        </div>
+        <!-- end col -->
+        <div class="col-md-6">
+          <div class="breadcrumb-wrapper">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#0">TABLEAU</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  TRANSACTIONS
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- ========== title-wrapper end ========== -->
+
+    <!-- ========== tables-wrapper start ========== -->
+    <div class="tables-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-style mb-30">
+            <div class="title d-flex flex-wrap align-items-center justify-content-between">
+              <div class="left">
+                <h6 class="text-medium mb-30">HISTORIQUE DES TRANSACTIONS</h6>
+              </div>
+              <div class="right">
+                <div class="select-style-1">
+                  <div class="select-position select-sm">
+                    <select class="light-bg" id="select">
+                      <option value="TOUS">TOUS</option>
+                      <option value="RETRAITS">RETRAITS</option>
+                      <option value="ACHATS">ACHATS</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- end select -->
+              </div>
+            </div>
+            <!-- End Title -->
+            <div class="table-responsive">
+              <table class="table top-selling-table" >
+                <thead>
+                  <tr>
+                    <th>
+                      <h6 class="text-sm text-medium">NUMERO AUTEUR</h6>
+                    </th>
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">
+                        TYPE 
+                      </h6>
+                    </th>
+
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">
+                        CONTRAT VOULU 
+                      </h6>
+                    </th>
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">
+                        MONTANT A PAYER 
+                      </h6>
+                    </th>
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">
+                        MONTANT A PAYER(USDT) 
+                      </h6>
+                    </th>
+
+                    <th class="min-width">
+                      <h6 class="text-sm text-medium">
+                        STATUT 
+                      </h6>
+                    </th>
+
+                    <th>
+                      <h6 class="text-sm text-medium">ADDRESSE USDT BENEF</h6>
+                    </th>
+
+                    
+                    <th>
+                      <h6 class="text-sm text-medium">NUMERO BENEFICIAIRE</h6>
+                    </th>
+                    <th>
+                      <h6 class="text-sm text-medium">LE</h6>
+                    </th>
+                    <th>
+                      <h6 class="text-sm text-medium text-end">
+                        ACTIONS 
+                      </h6>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for trans in transactions %}
+                  <tr >
+                    <td>
+                      <div class="product">
+
+                        <p class="text-sm">{{trans.Auteur.username}}</p>
+                      </div>
+                    </td>
+
+
+                    <td class="">
+                      <p class="text-sm text-red type-transaction" style="color: #de9307;text-transform:uppercase">{{trans.Type}}</p>
+                    </td>
+
+                    
+                    {% if trans.contrat  %}
+                    <td>
+                      <p class="text-sm text-red" style="color: #de9307;text-transform:uppercase">{{trans.contrat}}</p>
+                    </td>
+                    {% else %}
+                    <td>
+                      <p class="text-sm text-red" style="color: #de9307;text-transform:uppercase">AUCUN</p>
+                    </td>
+                    {% endif %}
+                      
+                    
+
+                    <td>
+                      <p class="text-sm" style="color: red;"><b>{{trans.Montant}} XAF</b></p>
+                    </td>
+                    
+                    {% if trans.MontantUSDT %}
+                    <td>
+                      <p class="text-sm" style="color: red;"><b>{{trans.MontantUSDT}} USDT</b></p>
+                    </td>
+                    {% else %}
+                    <td>
+                      <p class="text-sm" style="color: red;"><b>AUCUN</b></p>
+                    </td>
+                    {% endif %}
+                      
+                    
+
+                    {% if trans.en_attente %}
+                    <td>
+                      <span class="status-btn warning-btn">ATTENTE</span>
+                    </td>
+
+                    {% elif trans.valide %}
+
+                    <td>
+                      <span class="status-btn success-btn">VALIDE</span>
+                    </td>
+                    {% else %}
+
+                    <td>
+                      <span class="status-btn close-btn">REFUSEE</span>
+                    </td>
+                    {% endif %}
+
+                    <td>
+                      <div class="product">
+
+                        
+                        {% if trans.PorteFeuille %}
+                          <p class="text-sm">{{trans.PorteFeuille}}</p>
+                          {% else %}
+                          <p class="text-sm">AUCUNE</p>
+                        {% endif %}
+                          
+                      </div>
+                    </td>
+
+                    
+
+                    <td>
+                      <div class="product">
+
+                        {% if trans.Numero %}
+                        <p class="text-sm">{{trans.Numero}}</p>
+                        {% else %}
+                        <p class="text-sm">AUCUN</p>
+                      {% endif %}
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="product">
+
+                        <p class="text-sm">{{trans.date}}</p>
+                      </div>
+                    </td>
+                    
+                    <td>
+                      <div class="action justify-content-end">
+                       
+                        <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <i class="lni lni-more-alt"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                          <li class="dropdown-item">
+                            <a href="{% url 'valider_transaction' trans.id %}" class="text-green" style="color: rgb(255, 166, 0);">VALIDER</a>
+
+                          </li>
+                          <li class="dropdown-item">
+
+                            <a href="{% url 'refuser_transaction' trans.id %}" class="text-red" style="color: red;">REFUSER</a>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table -->
+            </div>
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- end row -->
+
+    </div>
+    <!-- ========== tables-wrapper end ========== -->
+  </div>
+  <!-- end container -->
+</section>
+<!-- ========== table components end ========== -->
+
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>VOTRE PROFILE</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item"><a href="#0">MOI</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        MON PROFILE
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <div class="row">
+
+            <div class="col-lg-8">
+              <div class="card-style settings-card-2 mb-30">
+                <div class="title mb-30">
+                  <h6>MON PROFILE</h6>
+                </div>
+                <form action="#">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>NOM COMPLET</label>
+                        <input type="text" placeholder="NOM COMPLET" required/>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>TELEPHONE</label>
+                        <input type="tel" placeholder="+237..." required />
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>TELEPHONE 2</label>
+                        <input type="tel" placeholder="+237..." />
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="input-style-1">
+                        <label>MOT DE PASSE</label>
+                        <input type="password" placeholder="MOT DE PASSE" required/>
+                      </div>
+                    </div>
+                    <div class="col-xxl-4">
+                      <div class="input-style-1">
+                        <label>VILLE</label>
+                        <input type="text" placeholder="VILLE" />
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <button class="main-btn primary-btn btn-hover">
+                        METTRE A JOUR
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- end card -->
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+
+      {% endblock %}

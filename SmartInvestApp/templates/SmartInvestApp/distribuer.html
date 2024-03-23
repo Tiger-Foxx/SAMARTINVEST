@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>DISTRIBUER LES GAINS</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        DISTRIBUER LES GAINS
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <section style="padding: 15px;">
+        <div class="col-lg">
+          <div class="card-style mb-30" >
+            <h1 class="mb-15 text-red" style="color:#d2790d">Important !!!</h1>
+            <p spellcheck="true">
+              <span class="text-success text-medium"> Vous distribuez les gains</span>
+              En selectionnant les contractaires que vous voulez renumerer (ou tous si c'est tout le monde) , vous entrez aussi le pourcentage de gains a augmenter chez chacun , et vous avez la possibilite de selectionner l'enciennete des clients que vous voulez renumerer
+              
+            </p>
+            </div>
+            </div>
+      </section>
+      <!-- ========== section end ========== -->
+      <section style="padding: 15px;">
+        <!-- input style start -->
+        <div class="card-style mb-30">
+          <h6 class="mb-25">FORMULAIRE DE DISTRIBUTION</h6>
+          <div class="input-style-1">
+            <label>POURCENTAGE DE GAINS A DISTRIBUER</label>
+            <input type="number" placeholder="%" />
+          </div>
+         
+          <!-- end input -->
+          <div class="input-style-1">
+            <label>Investisseurs presents depuis ?(jours)</label>
+            <input type="number" placeholder="0 si tout le monde" />
+          </div>
+          <!-- end input -->
+<!-- ======= select style start ======= -->
+<div class="card-style mb-30">
+  <h6 class="mb-25">CEUX AVEC UN CONTRAT DE: </h6>
+  <div class="select-style-1">
+    <label>SLECTIONNEZ</label>
+    <div class="select-position">
+      <select>
+        <option value="">TOUS</option>
+        <option value="">10,000 XAF</option>
+        <option value="">10,000 XAF</option>
+        <option value="">10,000 XAF</option>
+        <option value="">10,000 XAF</option>
+      </select>
+    </div>
+  </div>
+  <!-- end select -->
+
+          
+          <div class="input-style-1">
+            <a href="#0" class="main-btn primary-btn square-btn btn-hover">VALIDER L'OPERATION</a>
+          </div>
+          <!-- end input -->
+        </div>
+        <!-- end card -->
+        <!-- ======= input style end ======= -->
+      </section>
+      {% endblock %}

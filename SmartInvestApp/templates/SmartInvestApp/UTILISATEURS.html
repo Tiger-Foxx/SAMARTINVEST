@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+      <!-- ========== table components start ========== -->
+      <section class="table-components">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>VOS UTILISATEURS</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        UTILISATEURS
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <!-- ========== tables-wrapper start ========== -->
+          <div class="tables-wrapper">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card-style mb-30">
+                  <h6 class="mb-10">VOS UTILISATEURS ({{utilisateurs|length}})</h6>
+                  <p class="text-sm mb-20">
+                    Regardez ici vos utilisateurs de la plateforme.
+                  </p>
+                  <div class="table-wrapper table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="lead-info">
+                            <h6>Utilisateurs</h6>
+                          </th>
+                          <th class="lead-email">
+                            <h6>Telephone</h6>
+                          </th>
+                          <th class="lead-phone">
+                            <h6>Solde</h6>
+                          </th>
+                          <th class="lead-company">
+                            <h6>Contrat</h6>
+                          </th>
+                          <th>
+                            <h6>Depuis le</h6>
+                          </th>
+                        </tr>
+                        <!-- end table row-->
+                      </thead>
+                      <tbody>
+                       
+                       {% for util in utilisateurs %}
+                         <tr>
+                           <td class="min-width">
+                             <div class="lead">
+                               <div class="lead-image">
+                                 <img src="{% static 'assets/images/profile/profile-image.png' %}" alt="" />
+                               </div>
+                               <div class="lead-text">
+                                 <p>{{util.nom}}</p>
+                               </div>
+                             </div>
+                           </td>
+                           <td class="min-width">
+                             <p><a href="#0">{{util.username}}</a></p>
+                           </td>
+                           <td class="min-width">
+                             <p>{{util.solde}} XAF</p>
+                           </td>
+                           
+                           {% if util.contrat_courant %}
+                            <td class="min-width">
+                              <p>{{util.contrat_courant.Montant}} XAF</p>
+                            </td>
+                            {% else %}
+                            <td class="min-width">
+                              <p>AUCUN</p>
+                            </td>
+                           {% endif %}
+                            
+                           <td class="min-width">
+                             <p>{{util.date}}</p>
+                           </td>
+                         </tr>
+                         
+                       {% endfor %}
+                        <!-- end table row -->
+                     
+                      </tbody>
+                    </table>
+                    <!-- end table -->
+                  </div>
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== tables-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== table components end ========== -->
+      {% endblock %}

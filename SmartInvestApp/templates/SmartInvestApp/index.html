@@ -1,0 +1,760 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+{% load calcul_filters %}
+
+
+<!-- ========== section start ========== -->
+<section class="section">
+  <div class="container-fluid">
+    <!-- ========== title-wrapper start ========== -->
+    <div class="title-wrapper pt-30">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="title">
+
+            {% if user.is_authenticated %}
+            <h2 style="color: rgb(51, 237, 14);">Bienvenue Chez <b>Smart Invest</b>, {{user.nom}} !</h2>
+            {% else %}
+            <h2 style="color: rgb(51, 237, 14);">Bienvenue Chez <b>Smart Invest</b> !</h2>
+            {% endif %}
+
+
+          </div>
+        </div>
+        <!-- end col -->
+        <div class="col-md-6">
+          <div class="breadcrumb-wrapper">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#0">Tableau de bord</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Principal
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- ========== title-wrapper end ========== -->
+    <div class="row">
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+
+{% if not user.is_superuser %}
+  
+          
+          <div class="icon-card mb-30">
+            <div class="icon purple">
+              <i class="lni lni-dollar"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">CONTRAT EN COURS</h6>
+  
+              {% if user.contrat_courant %}
+              <h3 class="text-bold mb-10">{{user.contrat_courant.Montant}} XAF </h3>
+              
+              {% if user.contrat_expire %}
+              {% if not contrat.disponible  %}
+              <span class="text-red" style="color: #bd0000;">Contrat Expire</span>
+              {% endif %}
+              {% else %}
+              <p class="text-sm text-success">
+                <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{user.contrat_courant.pourcentage}}%
+                <span class="text-gray">(attendus)</span>
+              </p>
+              {% endif %}
+                
+              
+              {% else %}
+  
+              <h3 class="text-bold mb-10">0 XAF </h3>
+              <p class="text-sm text-success">
+                <i class='bx bx-up-arrow-alt bx-fade-up'></i> +0.00%
+                <span class="text-gray">(attendus)</span>
+              </p>
+              {% endif %}
+  
+  
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+{% else %}
+
+          
+<div class="icon-card mb-30">
+  <div class="icon purple">
+    <i class="lni lni-user"></i>
+  </div>
+  <div class="content">
+    <h6 class="mb-10">TOTAL UTILISATEURS CONTRACTAIRES</h6>
+    <h3 class="text-bold mb-10">{{totalContractaires}}</h3>
+
+    <p class="text-sm text-success">
+      <span class="text-gray">Vous avez <b>{{totalContractaires}} utilisateurs</b> avec un contrat Actif sur SMART INVEST</span>
+    </p>
+
+
+  </div>
+</div>
+<!-- End Icon Cart -->
+        
+{% endif %}
+  
+      </div>
+      <!-- End Col -->
+      
+      {% if not user.is_superuser %}
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon success">
+              <i class="lni lni-dollar"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">GAIN TOTAL</h6>
+              <h3 class="text-bold mb-10" style="color: #2cef0e;">{{user.solde}} XAF</h3>
+              <p class="text-sm text-success">
+                <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{ user.contrat_courant.Montant|calculer_pourcentage:user.contrat_courant.pourcentage }} XAF
+                <span class="text-gray">Bientot</span>
+              </p>
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+        {% else %}
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon success">
+              <i class="lni lni-dollar"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">SOLDE TOTAL DES UTILISATEURS</h6>
+              <h3 class="text-bold mb-10" style="color: #2cef0e;">{{totalSoldes}} XAF</h3>
+              <p class="text-sm text-success">
+                <span class="text-gray">Vos Utilisateurs ont un solde total de <b>{{totalSoldes}} XAF</b> </span>
+              </p>
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+      {% endif %}
+        
+      
+      {% if not user.is_superuser %}
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon primary">
+              <i class="lni lni-user"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">SOLDE RETIRABLE</h6>
+              <h3 class="text-bold mb-10">{{ user.solde|soustraire_pourcentage:2 }} XAF</h3>
+              <p class="text-sm text-danger">
+                <i class="lni lni-arrow-down"></i> -2.00%
+                <span class="text-gray">FRAIS</span>
+              </p>
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+
+        {% else %}
+
+        <div class="col-xl-3 col-lg-4 col-sm-6">
+          <div class="icon-card mb-30">
+            <div class="icon primary">
+              <i class="lni lni-user"></i>
+            </div>
+            <div class="content">
+              <h6 class="mb-10">NOMBRE TOTAL UTILISATEURS</h6>
+              <h3 class="text-bold mb-10">{{ totalUsers }}</h3>
+              <p class="text-sm text-danger">
+                <span class="text-gray">Vous avez un total de <b>{{totalUsers}} utilisateurs</b>  sur SMART INVEST</span>
+              </p>
+            </div>
+          </div>
+          <!-- End Icon Cart -->
+        </div>
+        <!-- End Col -->
+      {% endif %}
+        
+      
+      {% if contrat_suivant %}
+
+      {% if contrat_suivant.disponible and not user.is_superuser %}
+        <div class="col-xl-3 col-lg-4 col-sm-6" data-toggle="modal" data-target="#exampleModalCenter">
+          {% else %}
+        <div class="col-xl-3 col-lg-4 col-sm-6" >
+
+          {% endif %}
+          
+          
+          {% if not user.is_superuser %}
+            <div class="icon-card mb-30">
+              <div class="icon orange">
+                <i class='bx bxs-credit-card bx-flip-horizontal bx-tada' style="font-size: 50px;"></i>
+              </div>
+              <div class="content">
+                <h6 class="mb-10">CONTRAT SUIVANT</h6>
+                <h3 class="text-bold mb-10">{{contrat_suivant.Montant}} XAF</h3>
+                <p class="text-sm text-succes">
+                  
+                  {% if contrat_suivant.disponible %}
+                  <span class="text-gray">CLIQUER POUR ACHETER</span>
+                  {% else %}
+                  <span class="text-red" style="color: red;">Indisponible</span>
+                  {% endif %}
+                    
+                  
+                </p>
+              </div>
+            </div>
+
+            {% else %}
+            <div class="icon-card mb-30">
+              <div class="icon orange">
+                <i class='bx bxs-credit-card bx-flip-horizontal bx-tada' style="font-size: 50px;"></i>
+              </div>
+              <div class="content">
+                <h6 class="mb-10">TOTAL CONTRATS VALIDES EN COURS</h6>
+                <h3 class="text-bold mb-8">{{totalContrats}} XAF</h3>
+                <p class="text-sm text-succes">
+                    
+                  Vous avez actuellement un total de contrat actifs de : <b>{{totalContrats}} XAF</b>
+                </p>
+              </div>
+            </div>
+          {% endif %}
+            
+          <!-- End Icon Cart -->
+        </div>
+      
+        
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle" style="color: #2cef0e;">ACHAT DE CONTRAT</h4>
+              <a class="close" data-dismiss="modal" aria-label="Close" style="color: #ef0e0e;">
+                <i class="lni lni-close"></i>
+              </a>
+            </div>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN USDT</h5>
+
+            </div>
+            <div class="modal-body">
+              <p class="text-regular">Remplissez ce formulaire pour payer en USDT</p>
+              <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement
+                sont:</p>
+              <p class="text-regular" style="color: #2cef0e;">BEP-20: {{infos.BEP20}}</p>
+              <p class="text-regular" style="color: #efa40e;">ERC-20: {{infos.ERC20}}</p>
+              <p class="text-regular" style="color: #ef6c0e;">TRC-20: {{infos.TRC20}}</p>
+              <!-- input style start -->
+              <div class="card-style mb-30">
+                <div class="input-style-1">
+                  <label>Votre Addresse de portefeuille</label>
+                  <input type="text" placeholder="Addresse BEP,ERC,..." />
+                </div>
+                <!-- end input -->
+                <div class="input-style-2">
+                  <label>Montant USDT a payer</label>
+                  <input type="number" placeholder="Montant" />
+                  <span class="icon"> <i class="lni lni-money-location"></i> </span>
+                </div>
+                <!-- end input -->
+                <div class="input-style-3">
+                  <input type="text" value="XXXX USDT = XXXX XAF" disabled />
+                </div>
+                <!-- end input -->
+                <div class="input-style-3">
+                  <input type="text" value="CONTRAT DE {{contrat_suivant.Montant}} XAF" disabled />
+                </div>
+                <!-- end input -->
+                <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
+                    style="margin-bottom:5px">VALIDER</a>
+                  <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
+                </div>
+              </div>
+              <!-- end card -->
+              <!-- ======= input style end ======= -->
+            </div>
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN XAF</h5>
+
+            </div>
+            <div class="modal-body">
+              <p class="text-regular">Remplissez ce formulaire pour payer en XAF</p>
+              <p class="text-regular">Les Numeros possibles de Smart Invest aux-quelles effectuer les virement sont:
+              </p>
+              <p class="text-regular" style="color: #ef610e;">Orange-money:  {{infos.OM}}</p>
+              <p class="text-regular" style="color: #efd10e;">MTN-money:  {{infos.MTN}}</p>
+              <!-- input style start -->
+              <div class="card-style mb-30">
+                <div class="input-style-1">
+                  <label>Le numero qui va payer</label>
+                  <input type="number" placeholder="+237 ..." />
+                </div>
+                <!-- end input -->
+                <div class="input-style-2">
+                  <label>Montant XAF a payer</label>
+                  <input type="number" placeholder="Montant" />
+                  <span class="icon"> <i class="lni lni-money-location"></i> </span>
+                </div>
+                <!-- end input -->
+                <div class="input-style-3">
+                  <input type="text" value="CONTRAT DE {{contrat_suivant.Montant}} XAF" />
+                </div>
+                <!-- end input -->
+                <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
+                    style="margin-bottom:5px">VALIDER</a>
+                  <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
+                </div>
+              </div>
+              <!-- end card -->
+              <!-- ======= input style end ======= -->
+            </div>
+            <div class="modal-footer">
+              <h4>MERCI DE NOUS FAIRE CONFIANCE</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end modalmodal-->
+      {% endif %}
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-10">EVOLUTION DU SOLDE</h6>
+              <h3 class="text-bold">{{user.solde}} XAF</h3>
+            </div>
+            <div class="right">
+
+              <!-- end select -->
+            </div>
+          </div>
+          <!-- End Title -->
+          <div class="chart">
+            <canvas id="Chart1" style="width: 100%; height: 400px; margin-left: -35px;"></canvas>
+          </div>
+          <!-- End Chart -->
+        </div>
+      </div>
+      <!-- End Col -->
+      <div class="col-lg-5">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap align-items-center justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-30">ACHATS/RETRAITS</h6>
+            </div>
+
+          </div>
+          <!-- End Title -->
+          <div class="chart">
+            <canvas id="Chart2" style="width: 100%; height: 400px; margin-left: -45px;"></canvas>
+          </div>
+          <!-- End Chart -->
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+
+
+    <!-- End Row -->
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap align-items-center justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-30">HISTORIQUE DES TRANSACTIONS</h6>
+            </div>
+            <div class="right">
+              <div class="select-style-1">
+                <div class="select-position select-sm">
+                  <select class="light-bg">
+                    <option value="">RETRAITS</option>
+                    <option value="">ACHATS</option>
+                  </select>
+                </div>
+              </div>
+              <!-- end select -->
+            </div>
+          </div>
+          <!-- End Title -->
+          <div class="table-responsive">
+            <table class="table top-selling-table">
+              <thead>
+                <tr>
+                  <th>
+                    <h6 class="text-sm text-medium">NUMERO</h6>
+                  </th>
+                  <th class="min-width">
+                    <h6 class="text-sm text-medium">
+                      TYPE <i class="lni lni-arrows-vertical"></i>
+                    </h6>
+                  </th>
+                  <th class="min-width">
+                    <h6 class="text-sm text-medium">
+                      MONTANT <i class="lni lni-arrows-vertical"></i>
+                    </h6>
+                  </th>
+                  <th class="min-width">
+                    <h6 class="text-sm text-medium">
+                      STATUT <i class="lni lni-arrows-vertical"></i>
+                    </h6>
+                  </th>
+                  <th>
+                    <h6 class="text-sm text-medium text-end">
+                      ACTIONS <i class="lni lni-arrows-vertical"></i>
+                    </h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for trans in transactions %}
+                <tr>
+                  <td>
+                    <div class="product">
+                      <div class="image">
+                        <img src="{% static 'assets/images/profile/profile-image.png' %}" alt="" />
+                      </div>
+                      <p class="text-sm">{{trans.Numero}}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="text-sm" style="text-transform: uppercase;">{{trans.Type}}</p>
+                  </td>
+                  <td>
+                    <p class="text-sm">{{trans.Montant}} XAF</p>
+                  </td>
+
+                  {% if trans.en_attente %}
+                  <td>
+                    <span class="status-btn warning-btn">EN ATTENTE</span>
+                  </td>
+
+                  {% elif trans.valide %}
+
+                  <td>
+                    <span class="status-btn success-btn">VALIDEE</span>
+                  </td>
+                  {% else %}
+
+                  <td>
+                    <span class="status-btn close-btn">REFUSEE</span>
+                  </td>
+                  {% endif %}
+
+
+                  <td>
+                    {% if not trans.valide and not trans.en_attente %}
+                    <div class="action justify-content-end">
+                      <button class="edit">
+                        <i class="lni lni-pencil"></i>
+                      </button>
+                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="lni lni-more-alt"></i>
+                      </button>
+
+
+                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                        <li class="dropdown-item">
+                          <a href="#0" class="text-gray">RETANTER</a>
+                        </li>
+
+                      </ul>
+
+
+
+                    </div>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+            <!-- End Table -->
+          </div>
+        </div>
+      </div>
+      <!-- End Col -->
+      <div class="col-lg-5">
+        <div class="card-style calendar-card mb-30">
+          <div id="calendar-mini"></div>
+        </div>
+      </div>
+      <!-- End Col -->
+
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- end container -->
+</section>
+<!-- ========== section end ========== -->
+
+<script src="{% static 'assets/js/Chart.min.js' %}"></script>
+<script src="{% static 'assets/js/dynamic-pie-chart.js' %}"></script>
+<script src="{% static 'assets/js/moment.min.js' %}"></script>
+<script src="{% static 'assets/js/fullcalendar.js' %}"></script>
+<script src="{% static 'assets/js/jvectormap.min.js' %}"></script>
+<script src="{% static 'assets/js/world-merc.js' %}"></script>
+<script src="{% static 'assets/js/polyfill.js' %}"></script>
+
+
+
+<script>
+
+
+  // ====== calendar activation
+  document.addEventListener("DOMContentLoaded", function () {
+    // Récupération des données depuis le contexte Django
+
+    var calendarMiniEl = document.getElementById("calendar-mini");
+    var calendarMini = new FullCalendar.Calendar(calendarMiniEl, {
+      initialView: "dayGridMonth",
+      headerToolbar: {
+        end: "today prev,next",
+      },
+    });
+    calendarMini.render();
+  });
+
+  // =========== chart one start
+  const montants = JSON.parse('{{ montants | safe }}');
+  const dates = JSON.parse('{{ dates | safe }}');
+  const ctx1 = document.getElementById("Chart1").getContext("2d");
+  const chart1 = new Chart(ctx1, {
+    type: "line",
+    data: {
+      labels: dates, // Utilisation des dates pour les labels
+      datasets: [{
+        label: "Solde",
+        backgroundColor: "transparent",
+        borderColor: "#53F536",
+        data: montants, // Utilisation des montants pour les données
+        pointBackgroundColor: "transparent",
+        pointHoverBackgroundColor: "#36F536",
+        pointBorderColor: "transparent",
+        pointHoverBorderColor: "#fff",
+        pointHoverBorderWidth: 5,
+        borderWidth: 5,
+        pointRadius: 7,
+        pointBackgroundColor: '#F5E536',
+        pointHoverRadius: 8,
+        cubicInterpolationMode: "monotone",
+      }],
+    },
+    options: {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            labelColor: function (context) {
+              return {
+                backgroundColor: "#ffffff",
+                color: "#171717"
+              };
+            },
+          },
+          intersect: false,
+          backgroundColor: "#f9f9f9",
+          title: {
+            fontFamily: "Plus Jakarta Sans",
+            color: "#8F92A1",
+            fontSize: 12,
+          },
+          body: {
+            fontFamily: "Plus Jakarta Sans",
+            color: "#171717",
+            fontStyle: "bold",
+            fontSize: 16,
+          },
+          multiKeyBackground: "transparent",
+          displayColors: false,
+          padding: {
+            x: 30,
+            y: 10,
+          },
+          bodyAlign: "center",
+          titleAlign: "center",
+          titleColor: "#8F92A1",
+          bodyColor: "#171717",
+          bodyFont: {
+            family: "Plus Jakarta Sans",
+            size: "16",
+            weight: "bold",
+          },
+        },
+        legend: {
+          display: false,
+        },
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: false,
+      },
+      scales: {
+        y: {
+          grid: {
+            display: false,
+            drawTicks: false,
+            drawBorder: false,
+          },
+          ticks: {
+            padding: 35,
+            max: 1200,
+            min: 500,
+          },
+        },
+        x: {
+          grid: {
+            drawBorder: false,
+            color: "rgba(143, 146, 161, .1)",
+            zeroLineColor: "rgba(143, 146, 161, .1)",
+          },
+          ticks: {
+            padding: 20,
+          },
+        },
+      },
+    },
+  });
+  // =========== chart one end
+
+  // =========== chart two start
+
+  // Récupération des données depuis le contexte Django
+  const montantTs = JSON.parse('{{ montantTransacts | safe }}');
+  const dateTs = JSON.parse('{{ dateTransacts | safe }}');
+  const types = JSON.parse('{{ typeTransacts | safe }}');
+
+  // Définition des couleurs en fonction du type de transaction
+  const backgroundColors = types.map(type => type === 'ACHAT' ? '#36F543' : '#F53636');
+
+  // Création du graphique
+  const ctx2 = document.getElementById("Chart2").getContext("2d");
+  const chart2 = new Chart(ctx2, {
+    type: "bar",
+    data: {
+      labels: dateTs, // Utilisation des dates pour les labels
+      datasets: [{
+        label: "Montant",
+        backgroundColor: backgroundColors, // Utilisation des couleurs définies
+        borderRadius: 30,
+        barThickness: 6,
+        maxBarThickness: 8,
+        data: montantTs, // Utilisation des montants pour les données
+      }],
+    },
+    options: {
+      plugins: {
+        tooltip: {
+          callbacks: {
+            titleColor: function (context) {
+              return "#8F92A1";
+            },
+            label: function (context) {
+              let label = context.dataset.label || "";
+
+              if (label) {
+                label += ": ";
+              }
+              label += Math.round(context.parsed.y * 100) / 100; // Arrondir à deux décimales
+              return label;
+            },
+          },
+          backgroundColor: "#F3F6F8",
+          titleAlign: "center",
+          bodyAlign: "center",
+          titleFont: {
+            size: 12,
+            weight: "bold",
+            color: "#8F92A1",
+          },
+          bodyFont: {
+            size: 16,
+            weight: "bold",
+            color: "#171717",
+          },
+          displayColors: false,
+          padding: {
+            x: 30,
+            y: 10,
+          },
+        },
+        legend: {
+          display: true,
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 20,
+            color: '#171717',
+          }
+        },
+      },
+      layout: {
+        padding: {
+          top: 15,
+          right: 15,
+          bottom: 15,
+          left: 15,
+        },
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          grid: {
+            display: false,
+            drawTicks: false,
+            drawBorder: false,
+          },
+          ticks: {
+            padding: 35,
+            max: Math.max(...montantTs) + 100, // Ajuster le maximum en fonction des données
+            min: 0,
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+            drawBorder: false,
+            color: "rgba(143, 146, 161, .1)",
+            drawTicks: false,
+            zeroLineColor: "rgba(143, 146, 161, .1)",
+          },
+          ticks: {
+            padding: 20,
+          },
+        },
+      },
+    },
+  });
+
+  // =========== chart two end
+
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>ANNONCES DE L'ADMINISTRATEUR</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        ANNONCES
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+<section style="padding: 15px;">
+    <!-- ========= card-style-1 start ========= -->
+    <div class="row">
+     
+     {% for mes in Messagess %}
+       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+         <div class="card-style-1 mb-30">
+           <div class="card-meta">
+             <div class="image">
+               <img src="{% static 'assets/images/profile/admin.png' %}" alt="" />
+             </div>
+             <div class="text">
+               <p class="text-sm text-medium">
+                 MESSAGE ADMINISTRATEUR : <a href="#0">{{mes.NomAuteur}}</a>
+               </p>
+               <p class="text-sm text-medium">
+                LE : <a href="#0">{{mes.date}}</a>
+              </p>
+             </div>
+           </div>
+           <div class="card-image" style="padding: 15px;">
+             <a href="#0">
+               <img src="{{mes.image.url}}" alt="" />
+             </a>
+           </div>
+           <div class="card-content">
+             <h4><a href="#0">{{mes.title}} </a></h4>
+             <p>
+              {{mes.contenu}}
+             </p>
+           </div>
+         </div>
+         <!-- end card-->
+       </div>
+       <!-- end col -->
+     {% endfor %}
+
+    </div>
+    <!-- end row -->
+    <!-- ========= card-style-1 end ========= -->
+</section>
+{% endblock %}

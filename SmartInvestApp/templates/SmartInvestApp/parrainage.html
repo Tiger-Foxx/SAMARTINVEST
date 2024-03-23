@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>SECTION PARRAINAGE</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        PARRAINAGE
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+        </div>
+        <!-- end container -->
+      </section>
+      <!-- ========== section end ========== -->
+<section style="padding: 15px;">
+  <!-- end card -->
+  <div class="col-lg">
+    <div class="card-style mb-30" >
+      <h1 class="mb-30 text-green" style="color:#27d20d">LE PARRAINAGE</h1>
+      <p>
+        <span class="text-success text-medium"> Paragraph text</span>
+        sit amet, consectetur adipiscing elit. Orci pellentesque amet
+        quam massa in aliquet pulvinar tincidunt. Enim sit elit
+        scelerisque vel aliquam vel quam a tincidunt. Nunc diam at sed
+        fames integer turpis libero. Id nunc quisque sed ut nec
+        phasellus turpis enim elit. Turpis lobortis pellentesque ac
+        massa risus faucibus tempus ut neque. Faucibus orci faucibus
+        malesuada imperdiet vitae.Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Orci pellentesque amet quam massa
+        in aliquet pulvinar tincidunt. Enim sit elit scelerisque vel
+        aliquam vel quam a tincidunt. Nunc diam at sed fames integer
+        turpis libero. Id nunc quisque sed ut nec phasellus turpis
+        enim elit. Turpis lobortis pellentesque ac massa risus
+        faucibus tempus ut neque. Faucibus orci faucibus malesuada
+        imperdiet vitae.
+      </p>
+    </div>
+    <div class="card-style mb-30" >
+      <h1 class="mb-30 text-green" style="color:#fed908">VOTRE LIEN DE PARRAINAGE</h1>
+      <p>
+        <span class="text-success text-medium"> lien : </span>
+        <a href="{% url 'inscriptionParrainee' user.codeParrainage %}">VEUILLEZ COPIER(VOUS ETES  PARRAIN DE {{fieuils}} PERSONNES)</a>
+      </p>
+    </div>
+  </div>
+
+<!-- end card -->
+</section>
+{% endblock %}

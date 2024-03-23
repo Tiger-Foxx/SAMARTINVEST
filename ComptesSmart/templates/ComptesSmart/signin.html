@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+      <!-- ========== signin-section start ========== -->
+      <section class="signin-section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>CONNEXION</h2>
+                </div>
+              </div>
+              <!-- end col -->
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="#0">TABLEAU DE BORD</a>
+                      </li>
+                      <li class="breadcrumb-item"><a href="#0">AUTHENTIFICATION</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        CONNEXION
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <div class="row g-0 auth-row">
+            <div class="col-lg-6">
+              <div class="auth-cover-wrapper bg-primary-100">
+                <div class="auth-cover">
+                  <div class="title text-center">
+                    <h1 class="text-primary mb-10">CONTENT DE VOUS REVOIR</h1>
+                    <p class="text-medium">
+                      REMPLISSEZ VOS INFORMATIONS POUR VOUS CONNECTER
+                    </p>
+                  </div>
+                  <div class="cover-image">
+                    <img src="{% static 'assets/images/auth/piece2.png' %}" alt="" />
+                  </div>
+                  <div class="shape-image">
+                    <img src="{% static 'assets/images/auth/shape.svg' %}" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end col -->
+            <div class="col-lg-6">
+              <div class="signin-wrapper">
+                <div class="form-wrapper">
+                  <h6 class="mb-15">Formulaire de Connexion</h6>
+                  <p class="text-sm mb-25">
+                    Rejoignez le train de l'investissement et faites d'incoyables profits.
+                  </p>
+                  <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Telephone</label>
+                          <input type="tel" name="telephone" id="telephone" placeholder="+237 ..." />
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Mot de passe</label>
+                          <input type="password" name="password" id="password" placeholder="Mot de passe" />
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                        <div class="form-check checkbox-style mb-30">
+                          <input class="form-check-input" type="checkbox" value="" name="remember-me" id="checkbox-remember" />
+                          <label class="form-check-label" for="checkbox-remember">
+                            Se souvenir de moi sur cet appareil</label>
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                        <div class="text-start text-md-end text-lg-start text-xxl-end mb-30">
+                          <a href="mailto:smartinvest@gmail.com" class="hover-underline">
+                            Signaler un probleme?
+                          </a>
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-12">
+                        <p style="text-align: center;">
+                          <label  style="color: red;font-weight:700" id="messageErreur"></label>
+                    </p>
+                      </div>
+                      <div class="col-12">
+                        <div class="button-group d-flex justify-content-center flex-wrap">
+                          <a  href="#" onclick="send_data()" class="main-btn primary-btn btn-hover w-100 text-center">
+                            Se Connecter
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end row -->
+                  </form>
+                  <div class="singin-option pt-40">
+                    
+                    <p class="text-sm text-medium text-dark text-center">
+                      Vous n'avez pas encore de compte ?
+                      <a href="{% url 'inscription' %}">Creez un compte</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end col -->
+            <script>
+              function sub2() {
+                  document.getElementById("btnSub2").click();
+              }
+              function getCookie(name) {
+                // Cette fonction renvoie la valeur du cookie nommé name, ou null si le cookie n'existe pas
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== "") {
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Vérifier si le cookie commence par le nom recherché
+                        if (cookie.substring(0, name.length + 1) === name + "=") {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+              function send_data() {
+
+                  // Récupérer les données du formulaire
+                  var telephone = document.getElementById("telephone").value;
+                  var password = document.getElementById("password").value;
+
+
+                  // Créer un objet FormData pour stocker les données du formulaire
+                  var form_data = new FormData();
+                  form_data.append("telephone", telephone);
+                  form_data.append("password", password);
+                  form_data.append("remember-me", document.getElementById("checkbox-remember"));
+
+
+                  // Créer un objet XMLHttpRequest pour envoyer la requête Ajax
+                  var xhr = new XMLHttpRequest();
+
+                  xhr.open("POST", "/connexion/", true); // Remplacer "/singup/" par l'URL de votre vue Django
+                  xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // Ajouter le token CSRF pour la sécurité
+                  xhr.onload = function () {
+                      // Traiter la réponse du serveur
+                      if (xhr.status == 200) {
+                          // La requête a réussi
+                          var response = JSON.parse(xhr.responseText); // Convertir la réponse en objet JSON
+                          if (response.success) {
+                              // L'inscription ou la connexion a réussi
+                              window.location.href = response.redirect_url; // Rediriger l'utilisateur vers une autre page
+                          } else {
+                              // L'inscription ou la connexion a échoué
+                              document.getElementById("messageErreur").innerHTML = response.message; // Afficher le message d'erreur
+                          }
+                      } else {
+                          // La requête a échoué
+                          document.getElementById("messageErreur").innerHTML = "OUPS !! Une Erreur s'est produite "; // Afficher un message générique
+                      }
+                  };
+                  xhr.send(form_data); // Envoyer les données du formulaire
+              }
+
+          </script>
+          </div>
+          <!-- end row -->
+        </div>
+      </section>
+      <!-- ========== signin-section end ========== -->
+      {% endblock %}
