@@ -4,8 +4,12 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import get_user_model,login,logout,authenticate
 import django.contrib.auth.models
 from django.http import JsonResponse
+from django.contrib.auth.hashers import make_password
+
 import random
 import string
+
+from SmartInvestApp.models import Message, Notification
 # Create your views here.
 User=get_user_model()
 from ComptesSmart.models import *
@@ -110,3 +114,35 @@ def deconnexion(request):
 
 ############################## AUTHENTIFICATION ##############################
 ##############################################################################
+
+
+def profile(request,nom):
+    if  not request.user.is_authenticated:
+        return redirect('connexion')
+    if  request.user.username !=nom:
+        return redirect('connexion')
+    if request.method == 'POST':
+        utilisateur = get_object_or_404(Utilisateur,id=request.user.id)
+        # traiter le formulaire
+        name =request.POST.get("nom")
+        telephone=request.POST.get("telephone")
+        telephone2=request.POST.get("telephone2")
+        password=request.POST.get("password")      
+        ville=request.POST.get("ville")
+        utilisateur.nom=name
+        utilisateur.username=telephone
+        utilisateur.telephone2=telephone2
+        if password and password !="":
+            
+            hashed_password = make_password(password)
+            utilisateur.password=hashed_password
+        utilisateur.ville=ville
+        utilisateur.save()
+        
+        return redirect('index')
+    notificationss=Notification.objects.all().order_by('-date')[:4]
+    Messagess=Message.objects.all().order_by('-date') [:5]
+    return render(request,'SmartInvestApp/profile.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
+
+
+

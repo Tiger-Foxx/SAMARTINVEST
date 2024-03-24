@@ -58,14 +58,6 @@ def politique(request):
     return render(request,'SmartInvestApp/politique.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
 
 
-def profile(request,nom):
-    if  request.user.username !=nom:
-        return redirect('connexion')
-    notificationss=Notification.objects.all().order_by('-date')[:4]
-    Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/profile.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
-
-
 def parrainage(request,nom):
     if not request.user.is_authenticated:
         return redirect('connexion')
@@ -91,6 +83,16 @@ def messages(request):
         return redirect('connexion')
     Messagess=Message.objects.all().order_by('-date')
     notificationss=Notification.objects.all().order_by('-date')[:4]
+    if request.method == 'POST' and request.user.is_superuser:
+        Messagess=Messagess[:5]
+        image=request.FILES.get("image")
+        titre=request.POST.get("titre")
+        contenu=request.POST.get("contenu")
+        nomAuteur=request.POST.get("nomAuteur")
+        
+        Message.objects.create(image=image,title=titre,contenu=contenu,NomAuteur=nomAuteur)
+        return redirect('messages')
+    
     return render(request,'SmartInvestApp/messages.html',context={'Messagess' : Messagess,'notificationss' : notificationss})
 
 def transactions(request):
@@ -102,6 +104,13 @@ def transactions(request):
     Messagess=Message.objects.all().order_by('-date') [:5]
     return render(request,'SmartInvestApp/TRANSACTIONS.html',context={'transactions' : transactions,'notificationss' : notificationss,"Messagess" : Messagess})
 
+def PasserAnnonce(request):
+    if not request.user.is_superuser:
+        return redirect('connexion')
+    
+    notificationss=Notification.objects.all().order_by('-date')[:4]
+    Messagess=Message.objects.all().order_by('-date') [:5]
+    return render(request,'SmartInvestApp/Annoncer.html',context={'notificationss' : notificationss,"Messagess" : Messagess})
 def utilisateurs(request):
     if not request.user.is_superuser:
         return redirect('connexion')
@@ -223,6 +232,34 @@ def refuserTransaction(request,id):
 
 
 
+
+
 ############# fonctions CRUD ##############
 ############# fonctions CRUD ##############
 ############# fonctions CRUD ##############
+
+def showFirebaseJS(request):
+    data='importScripts("https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/10.9.0/firebase-messaging.js"); ' \
+         'var firebaseConfig = {' \
+         '        apiKey: "AIzaSyBdT5JVHUcNYRub3dsFUKRiIf8Xm8ZYU6E",' \
+         '        authDomain: "smart-invest-f557b.firebaseapp.com",' \
+         '        projectId: "smart-invest-f557b",' \
+         '        storageBucket: "smart-invest-f557b.appspot.com",' \
+         '        messagingSenderId: "166471964412",' \
+         '        appId: "1:166471964412:web:046e9786fa06d85cc1a979",' \
+         '        measurementId: "G-TZPJBC9EGM"' \
+         ' };' \
+         'app=initializeApp(firebaseConfig);' \
+         'const messaging=getMessaging(app);' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
+
+    return HttpResponse(data,content_type="text/javascript")

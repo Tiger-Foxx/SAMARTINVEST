@@ -44,41 +44,42 @@
                 <div class="title mb-30">
                   <h6>MON PROFILE</h6>
                 </div>
-                <form action="#">
+                <form action="#" method="post">
+                  {% csrf_token %}
                   <div class="row">
                     <div class="col-12">
                       <div class="input-style-1">
                         <label>NOM COMPLET</label>
-                        <input type="text" placeholder="NOM COMPLET" required/>
+                        <input type="text" name="nom" value="{{user.nom}}" placeholder="NOM COMPLET" required/>
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="input-style-1">
                         <label>TELEPHONE</label>
-                        <input type="tel" placeholder="+237..." required />
+                        <input type="tel" name="telephone" value="{{user.username}}" placeholder="+237..." required />
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="input-style-1">
                         <label>TELEPHONE 2</label>
-                        <input type="tel" placeholder="+237..." />
+                        <input type="tel" name="telephone2" value="{{user.telephone2}}" placeholder="+237..." />
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="input-style-1">
                         <label>MOT DE PASSE</label>
-                        <input type="password" placeholder="MOT DE PASSE" required/>
+                        <input type="password" name="password" placeholder="MOT DE PASSE"/>
                       </div>
                     </div>
                     <div class="col-xxl-4">
                       <div class="input-style-1">
                         <label>VILLE</label>
-                        <input type="text" placeholder="VILLE" />
+                        <input type="text" name="ville" value="{{user.ville}}" placeholder="VILLE" />
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <button class="main-btn primary-btn btn-hover">
+                      <button type="submit" class="main-btn primary-btn btn-hover">
                         METTRE A JOUR
                       </button>
                     </div>

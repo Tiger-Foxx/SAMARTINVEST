@@ -2,8 +2,8 @@
 <html lang="fr">
 
 <head>
-    {% load static %}
-    
+  {% load static %}
+
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +14,8 @@
   <!-- ========== All CSS files linkup ========= -->
   <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
   <link rel="stylesheet" href="{% static 'assets/css/lineicons.css' %}" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{% static 'assets/css/materialdesignicons.min.css' %}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{% static 'assets/css/materialdesignicons.min.css' %}" rel="stylesheet"
+    type="text/css" />
   <link rel="stylesheet" href="{% static 'assets/css/fullcalendar.css' %}" />
   <link rel="stylesheet" href="{% static 'assets/css/fullcalendar.css' %}" />
   <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
@@ -60,35 +61,52 @@
         <span class="divider">
           <hr />
         </span>
-       
-       {% if user.is_superuser %}
-         <li class="nav-item nav-item-has-children">
-           <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_4" aria-controls="ddmenu_4"
-             aria-expanded="false" aria-label="Toggle navigation">
-             <span class="icon">
-               <i class="lni lni-shield"></i>
-             </span>
-             <span class="text">ADMINISTRATEUR </span>
-           </a>
-           <ul id="ddmenu_4" class="collapse dropdown-nav">
-             <li>
-               <a href="{% url 'transactions' %}">TRANSACTIONS EN COURS </a>
-             </li>
-             <li>
-               <a href="{% url 'utilisateurs' %}">LISTE DES UTILISATEURS </a>
-             </li>
-             <li>
-               <a href="{% url 'distribuer' %}">DISTRIBUER LES GAINS </a>
-             </li>
- 
-           </ul>
-         </li>
-         <span class="divider">
+
+        {% if user.is_superuser %}
+        <li class="nav-item nav-item-has-children">
+          <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_4" aria-controls="ddmenu_4"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="icon">
+              <i class="lni lni-shield"></i>
+            </span>
+            <span class="text">ADMINISTRATEUR </span>
+          </a>
+          <ul id="ddmenu_4" class="collapse dropdown-nav">
+            <li>
+              <span class="icon">
+              <i class="lni lni-money-protection"></i>
+            </span>
+
+              <a href="{% url 'transactions' %}">TRANSACTIONS EN COURS </a>
+            </li>
+            <li>
+              <span class="icon">
+              <i class="lni lni-user"></i>
+            </span>
+              <a href="{% url 'utilisateurs' %}">LISTE DES UTILISATEURS </a>
+            </li>
+            <li>
+              <span class="icon">
+              <i class="lni lni-plus"></i>
+            </span>
+              <a href="{% url 'distribuer' %}">DISTRIBUER LES GAINS </a>
+            </li>
+
+            <li>
+              <span class="icon">
+              <i class="lni lni-soundcloud"></i>
+            </span>
+              <a href="{% url 'PasserAnnonce' %}">PASSER UNE ANNONCE </a>
+            </li>
+
+          </ul>
+        </li>
+        <span class="divider">
           <hr />
         </span>
-       {% endif %}
-        
-        
+        {% endif %}
+
+
         <li class="nav-item nav-item-has-children">
           <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_2" aria-controls="ddmenu_2"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +151,7 @@
                   d="M11.6383 15.18L15.805 11.0133C16.5373 10.2811 16.5373 9.09391 15.805 8.36166L11.6383 4.195C11.2722 3.82888 10.7923 3.64582 10.3125 3.64582V3.02082C10.3125 2.10035 11.0587 1.35416 11.9792 1.35416H16.9792C17.8997 1.35416 18.6458 2.10035 18.6458 3.02082V16.3542C18.6458 17.2747 17.8997 18.0208 16.9792 18.0208H11.9792C11.0587 18.0208 10.3125 17.2747 10.3125 16.3542V15.7292C10.7923 15.7292 11.2722 15.5461 11.6383 15.18Z" />
               </svg>
             </span>
-            <span class="text" >CONNEXION/ <br>INSCRIPTION</span>
+            <span class="text">CONNEXION/ <br>INSCRIPTION</span>
           </a>
           <ul id="ddmenu_3" class="collapse dropdown-nav">
             <li>
@@ -178,18 +196,18 @@
         <span class="divider">
           <hr />
         </span>
-        
+
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a href="{% url 'parrainage' user.username %}">
-              <span class="icon text-warning">
-                <i class="lni lni-user"></i>
-              </span>
-              <span class="text-warning">PARRAINAGE</span>
-            </a>
-          </li>
+        <li class="nav-item">
+          <a href="{% url 'parrainage' user.username %}">
+            <span class="icon text-warning">
+              <i class="lni lni-user"></i>
+            </span>
+            <span class="text-warning">PARRAINAGE</span>
+          </a>
+        </li>
         {% endif %}
-          
+
         <li class="nav-item nav-item-has-children">
           <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#ddmenu_4" aria-controls="ddmenu_4"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -237,16 +255,16 @@
                   <i class="lni lni-chevron-left me-2"></i> Menu
                 </button>
               </div>
-              
+
               {% if user.is_authenticated %}
-                <div class="header-search d-none d-md-flex">
-                  <form action="#">
-                    <input type="text" placeholder="Search..." />
-                    <button><i class="lni lni-search-alt"></i></button>
-                  </form>
-                </div>
+              <div class="header-search d-none d-md-flex">
+                <form action="#">
+                  <input type="text" placeholder="Search..." />
+                  <button><i class="lni lni-search-alt"></i></button>
+                </form>
+              </div>
               {% endif %}
-                
+
             </div>
           </div>
           {% if user.is_authenticated %}
@@ -267,31 +285,31 @@
                   <span></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notification">
-                  
-                  
+
+
                   {% for notif in notificationss %}
-                    <li>
-                      <a href="{% url 'notifications' %}">
-                        <div class="image">
-                          <img src="{% static 'assets/images/profile/admin.png' %}" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>
-                            DE L'ADMINISTRATEUR
-                            <span class="text-regular">
-                              SMART INVEST
-                            </span>
-                          </h6>
-                          <p>
-                            {{notif.Motif|slice:":60"}} ...
-                          </p>
-                          <span>{{notif.date}}</span>
-                        </div>
-                      </a>
-                    </li>
+                  <li>
+                    <a href="{% url 'notifications' %}">
+                      <div class="image">
+                        <img src="{% static 'assets/images/profile/admin.png' %}" alt="" />
+                      </div>
+                      <div class="content">
+                        <h6>
+                          DE L'ADMINISTRATEUR
+                          <span class="text-regular">
+                            SMART INVEST
+                          </span>
+                        </h6>
+                        <p>
+                          {{notif.Motif|slice:":60"}} ...
+                        </p>
+                        <span>{{notif.date}}</span>
+                      </div>
+                    </a>
+                  </li>
                   {% endfor %}
-                    
-                
+
+
                 </ul>
               </div>
               <!-- notification end -->
@@ -310,35 +328,35 @@
                   <span></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message">
-                  
+
                   {% for mes in Messagess %}
-                    <li>
-                      <a href="{% url 'messages' %}">
-                        <div class="image">
-                          <img src="{% static 'assets/images/profile/admin.png' %}" alt="" />
-                        </div>
-                        <div class="content">
-                          <h6>{{mes.NomAuteur}}</h6>
-                          <p>{{mes.contenu|slice:":60"}} ...</p>
-                          <span>{{mes.date}}</span>
-                        </div>
-                      </a>
-                    </li>
+                  <li>
+                    <a href="{% url 'messages' %}">
+                      <div class="image">
+                        <img src="{{mes.image.url}}" alt="" />
+                      </div>
+                      <div class="content">
+                        <h6>{{mes.NomAuteur}}</h6>
+                        <p>{{mes.contenu|slice:":60"}} ...</p>
+                        <span>{{mes.date}}</span>
+                      </div>
+                    </a>
+                  </li>
                   {% endfor %}
-                    
-               
+
+
                 </ul>
               </div>
               <!-- message end -->
-             
-             
-               <!-- profile start -->
-               <div class="profile-box ml-15">
-                 <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                   <div class="profile-info">
-                     <div class="info">
-                       <div class="image">
+
+
+              <!-- profile start -->
+              <div class="profile-box ml-15">
+                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="profile-info">
+                    <div class="info">
+                      <div class="image">
                         {% if user.is_superuser %}
                         <img src="{% static 'assets/images/profile/admin.png' %}" alt="" />
 
@@ -347,61 +365,62 @@
                         <img src="{% static 'assets/images/profile/profile-image.png' %}" alt="" />
 
                         {% endif %}
-                       </div>
-                       <div>
-                         <h6 class="fw-500">{{user.nom}}</h6>
-                         
-                         {% if user.is_superuser %}
-                         <p>ADMINISTRATEUR</p>
-                         {% else %}
-                         <p>INVESTISSEUR</p>
-                         {% endif %}
-                           
-                         
-                       </div>
-                     </div>
-                   </div>
-                 </button>
-                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                   <li>
-                     <div class="author-info flex items-center !p-1">
-                       <div class="image">
-                         <img src="{% static 'assets/images/profile/profile-image.png' %}" alt="image">
-                       </div>
-                       <div class="content">
-                         <h4 class="text-sm">{{user.nom}}</h4>
-                         <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs"
-                           href="#">{{user.username}}</a>
-                       </div>
-                     </div>
-                   </li>
-                   <li class="divider"></li>
-                   <li>
-                     <a href="{% url 'profile' user.username %}">
-                       <i class="lni lni-user"></i>Profil
-                     </a>
-                   </li>
-                   <li>
-                     <a href="{% url 'notifications' %}">
-                       <i class="lni lni-alarm"></i> Notifications
-                     </a>
-                   </li>
-                   <li>
-                     <a href="{% url 'messages' %}"> <i class="lni lni-inbox"></i> Messages </a>
-                   </li>
-                   <li class="divider"></li>
-                   <li>
-                     <a href="{% url 'parrainage' user.username %}" class="text-warning"> <i class="lni lni-user"></i> Parrainage </a>
-                   </li>
-                   <li class="divider"></li>
-                   <li>
-                     <a href="{% url 'logout' %}"> <i class="lni lni-exit"></i> Deconnection </a>
-                   </li>
-                 </ul>
-               </div>
-               <!-- profile end -->
-             
-              
+                      </div>
+                      <div>
+                        <h6 class="fw-500">{{user.nom}}</h6>
+
+                        {% if user.is_superuser %}
+                        <p>ADMINISTRATEUR</p>
+                        {% else %}
+                        <p>INVESTISSEUR</p>
+                        {% endif %}
+
+
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                  <li>
+                    <div class="author-info flex items-center !p-1">
+                      <div class="image">
+                        <img src="{% static 'assets/images/profile/profile-image.png' %}" alt="image">
+                      </div>
+                      <div class="content">
+                        <h4 class="text-sm">{{user.nom}}</h4>
+                        <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs"
+                          href="#">{{user.username}}</a>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="{% url 'profile' user.username %}">
+                      <i class="lni lni-user"></i>Profil
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'notifications' %}">
+                      <i class="lni lni-alarm"></i> Notifications
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'messages' %}"> <i class="lni lni-inbox"></i> Messages </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="{% url 'parrainage' user.username %}" class="text-warning"> <i class="lni lni-user"></i>
+                      Parrainage </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="{% url 'logout' %}"> <i class="lni lni-exit"></i> Deconnection </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- profile end -->
+
+
             </div>
           </div>
           {% endif %}
@@ -418,56 +437,49 @@
 
 
     <!-- ========== footer start =========== -->
-<footer class="footer">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 order-last order-md-first">
-              <div class="copyright text-center text-md-start">
-                <p class="text-sm">
-                  Designed and Developed by
-                  <a href="https://fox-s.netlify.app" rel="nofollow" target="_blank">
-                    FOX
-                  </a>
-                </p>
-  
-              </div>
-            </div>
-            <!-- end col-->
-            <div class="col-md-6">
-              <div class="terms d-flex justify-content-center justify-content-md-end">
-                <a href="#0" class="text-sm">AIDE</a>
-                <a href="{% url 'politique' %}" class="text-sm ml-15">Politique de Smart Invest</a>
-              </div>
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 order-last order-md-first">
+            <div class="copyright text-center text-md-start">
+              <p class="text-sm">
+                Designed and Developed by
+                <a href="https://fox-s.netlify.app" rel="nofollow" target="_blank">
+                  FOX
+                </a>
+              </p>
+
             </div>
           </div>
-          <!-- end row -->
+          <!-- end col-->
+          <div class="col-md-6">
+            <div class="terms d-flex justify-content-center justify-content-md-end">
+              <a href="#0" class="text-sm">AIDE</a>
+              <a href="{% url 'politique' %}" class="text-sm ml-15">Politique de Smart Invest</a>
+            </div>
+          </div>
         </div>
-        <!-- end container -->
-      </footer>
-      <!-- ========== footer end =========== -->
-    </main>
-    <!-- ======== main-wrapper end =========== -->
+        <!-- end row -->
+      </div>
+      <!-- end container -->
+    </footer>
+    <!-- ========== footer end =========== -->
+  </main>
+  <!-- ======== main-wrapper end =========== -->
+
+  <!-- ========= All Javascript files linkup ======== -->
+  <script src="{% static 'assets/js/jquery-3-7-1.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'assets/js/polyfill.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
   
-    <!-- ========= All Javascript files linkup ======== -->
-    <script src="{% static 'assets/js/jquery-3-7-1.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
-    
-    <script src="{% static 'assets/js/polyfill.js' %}"></script>
-    <script src="{% static 'assets/js/main.js' %}"></script>
-
-
-  </body>
-  
-  </html>    
 
 
 
 
 
+</body>
 
-
-
-
-
- 
+</html>

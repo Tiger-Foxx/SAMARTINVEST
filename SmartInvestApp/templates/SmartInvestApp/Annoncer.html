@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- ========== section start ========== -->
+<section class="section">
+  <div class="container-fluid">
+    <!-- ========== title-wrapper start ========== -->
+    <div class="title-wrapper pt-30">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="title">
+            <h2>PASSEZ UNE ANNONCE AUX UTILISATEURS</h2>
+          </div>
+        </div>
+        <!-- end col -->
+        <div class="col-md-6">
+          <div class="breadcrumb-wrapper">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="#0">TABLEAU DE BORD</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  ANNONCE AUX UTILISATEURS
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- ========== title-wrapper end ========== -->
+  </div>
+  <!-- end container -->
+</section>
+
+<!-- ========== section end ========== -->
+<form action="{% url 'annoncer' %}" method="post" enctype="multipart/form-data" >
+{% csrf_token %}
+  <section style="padding: 15px;">
+    <!-- input style start -->
+    <div class="card-style mb-30">
+      <h6 class="mb-25">Passez l'annonce</h6>
+      <div class="input-style-1">
+        <label>NOM DE L"AUTEUR</label>
+        <input type="text" name="nomAuteur" placeholder="%" value="{{user.nom}}" required />
+      </div>
+  
+      <!-- end input -->
+      <div class="input-style-1">
+        <label>TITRE DE L'ANNONCE</label>
+        <input type="text" name="titre" value="" placeholder="LE TITRE ICI" required />
+      </div>
+      <div class="input-style-1">
+        <label>CONTENU DE L'ANNONCE</label>
+        <textarea name="contenu" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="input-style-1">
+        <label>IMAGE DE L'ANNONCE</label>
+        <input type="file" name="image"  required />
+      </div>
+      <!-- end input -->
+      <!-- ======= select style start ======= -->
+      <div class="card-style mb-30">
+        
+        
+        <!-- end select -->
+        <button type="submit" hidden="true" id="btSub"></button>
+  
+        <div class="input-style-1">
+          <a href="#0" onclick="document.getElementById('btSub').click()" style="margin-top: 10px;" class="main-btn primary-btn square-btn btn-hover">VALIDER L'OPERATION</a>
+        </div>
+        <!-- end input -->
+      </div>
+      <!-- end card -->
+      <!-- ======= input style end ======= -->
+  </section>
+
+</form>
+{% endblock %}

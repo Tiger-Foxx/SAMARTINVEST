@@ -34,6 +34,8 @@ urlpatterns = [
     path('parrainage/<str:nom>',parrainage,name='parrainage'),
     path('help/',help,name='help'),
     path('transactions/',transactions,name='transactions'),
+    path('Annoncer/',messages,name='annoncer'),
+    path('PasserAnnonce/',PasserAnnonce,name='PasserAnnonce'),
     path('utilisateurs/',utilisateurs,name='utilisateurs'),
     path('acheter/',acheter,name='acheter'),
     path('distribuer/',distribuer,name='distribuer'),
@@ -42,6 +44,8 @@ urlpatterns = [
     path('inscriptionParrainee/<str:code>',inscriptionParrainee,name='inscriptionParrainee'),
     path('refuser_transaction/<str:id>',refuserTransaction,name='refuser_transaction'),
     path('profile/<str:nom>',profile,name='profile'),
+    path('firebase-messaging-sw.js',showFirebaseJS,name="show_firebase_js"),
+
 
     path('admin/', admin.site.urls),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

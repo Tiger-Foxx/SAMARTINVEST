@@ -7,7 +7,10 @@ import random
 import string
 from ComptesSmart.models import Utilisateur
 from SmartInvestApp.models import Notification, Transaction
-
+from django.http.request import HttpHeaders
+from django.http import HttpResponse
+import requests
+import json
 
 def trouver_contrat_suivant(contrats, contrat_courant):
     # Trier les contrats par montant en ordre croissant
@@ -86,7 +89,7 @@ def recompenserParrains(utilisateur, n):
         # Vérifier si le parrain a aussi un parrain (grand-parrain)
         if utilisateur.parrain.parrain:
             # Calculer la récompense pour le grand-parrain
-            recompense_grand_parrain = recompense_parrain * 0.04
+            recompense_grand_parrain = recompense_parrain /2
             # Augmenter le solde du grand-parrain
             utilisateur.parrain.parrain.solde += recompense_grand_parrain
             ajout_historique=str(utilisateur.parrain.parrain.solde)+"|"+datetime.date.today().strftime("%d-%m-%Y")+"#"
@@ -148,6 +151,28 @@ def Verifier():
   
 
 
+def send_notification(registration_ids , message_title , message_desc):
+    fcm_api = "AAAAJsKAlvw:APA91bFFWysGMb6nP6FDv49zYKlgLf6vQWL2xLh504YCV261nZ11Wth_4HDr29byD8kcCYtdC0xLWaABzOO1YJJzW8gSc5jjG2bNP_DcIAZECzJAOBNxIZQWGmDhG8iMazx6NcjlqK1I"
+    url = "https://fcm.googleapis.com/fcm/send"
+    
+    headers = {
+    "Content-Type":"application/json",
+    "Authorization": 'key='+fcm_api}
+
+    payload = {
+        "registration_ids" :registration_ids,
+        "priority" : "high",
+        "notification" : {
+            "body" : message_desc,
+            "title" : message_title,
+            "image" : "https://i.ytimg.com/vi/m5WUPHRgdOA/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDwz-yjKEdwxvKjwMANGk5BedCOXQ",
+            "icon": "https://yt3.ggpht.com/ytc/AKedOLSMvoy4DeAVkMSAuiuaBdIGKC7a5Ib75bKzKO3jHg=s900-c-k-c0x00ffffff-no-rj",
+            
+        }
+    }
+
+    result = requests.post(url,  data=json.dumps(payload), headers=headers )
+    print(result.json())
 
 
 ################################### UTILITAIRES #####################################################

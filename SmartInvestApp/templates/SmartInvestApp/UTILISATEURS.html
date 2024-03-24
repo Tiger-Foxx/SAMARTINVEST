@@ -89,7 +89,17 @@
                            
                            {% if util.contrat_courant %}
                             <td class="min-width">
+                              
+                              {% if util.contrat_expire %}
+                              <p style="color: red;">{{util.contrat_courant.Montant}} XAF(expire)</p>
+
+                              {% else %}
                               <p>{{util.contrat_courant.Montant}} XAF</p>
+                                
+                              {% endif %}
+
+                              
+                                
                             </td>
                             {% else %}
                             <td class="min-width">
