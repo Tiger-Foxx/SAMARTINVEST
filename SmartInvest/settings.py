@@ -12,20 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import environ
 
+
+env = environ.Env()
+environ.Env.read_env(env_file=str(BASE_DIR / "SmartInvest" / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hu*w#s1ktd5@z%*v+*3z59f#jis3a*o3-s_em*xr7f3l*0!v^t'
+SECRET_KEY = 'django-insecure-)o!g70&28ajh$#3=69bf9ml^k@@uy^5bm#f!pz!k0terp_9&-x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = env.bool("DEBUG")
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -39,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ComptesSmart',
     'SmartInvestApp',
-    
 ]
 
 MIDDLEWARE = [
