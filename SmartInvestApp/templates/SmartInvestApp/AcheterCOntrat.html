@@ -88,13 +88,13 @@
               <span class="text-gray">Benefices/jour</span>
             </p>
             {% elif contrat.Montant < 1500000 %}
-            <h3 class="text-bold mb-10" style="color: #efc90e;">30,000 XAF</h3>
+            <h3 class="text-bold mb-10" style="color: #efc90e;">{{contrat.Montant}} XAF</h3>
             <p class="text-sm text-warning">
               <i class='bx bx-up-arrow-alt bx-fade-up'></i> +2%
               <span class="text-gray">Benefices/jours</span>
             </p>
             {% else %}
-            <h3 class="text-bold mb-10" style="color: #ef0e0e;">280,000 XAF</h3>
+            <h3 class="text-bold mb-10" style="color: #ef0e0e;">{{contrat.Montant}} XAF</h3>
             <p class="text-sm text-warning">
               <i class='bx bx-up-arrow-alt bx-fade-up'></i> +2%
               <span class="text-gray">Benefices/jours</span>
@@ -112,102 +112,106 @@
         <!-- End Icon Cart -->
       </div>
       <!-- End Col -->
-      <!-- Modal -->
-      <div class="modal fade" id="ModalExemple{{contrat.id}}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <form action="{% url 'acheter' %}" method="post">
-            {% csrf_token %}
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLongTitle" style="color: #2cef0e;">ACHAT DE CONTRAT</h4>
-                <a class="close" data-dismiss="modal" aria-label="Close" style="color: #ef0e0e;">
-                  <i class="lni lni-close"></i>
-                </a>
-              </div>
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN USDT</h5>
-    
-              </div>
-              <div class="modal-body">
-                <p class="text-regular">Remplissez ce formulaire pour payer en USDT</p>
-                <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en USDT !!!!</p>
-                <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
-                <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
-                <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
-                <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
-                <!-- input style start -->
-                <div class="card-style mb-30">
-                  <div class="input-style-1">
-                    <label>Votre Addresse de portefeuille</label>
-                    <input type="text" name="adresseUSDT" placeholder="Addresse BEP,ERC,..." />
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <label>Montant USDT a payer</label>
-                    <input type="number" name="MontantUSDT" placeholder="MontantUSDT" />
-                    <span class="icon"> <i class="lni lni-money-location"></i> </span>
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-3">
-                    <input type="text"  value="XXXX USDT = XXXX XAF" disabled />
-                  </div>
-                 
-                  <!-- end input -->
-                  <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
-                      style="margin-bottom:5px">VALIDER</a>
-                    <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
-                  </div>
+      
+      {% if contrat.disponible %}
+        <!-- Modal -->
+        <div class="modal fade" id="ModalExemple{{contrat.id}}" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <form action="{% url 'acheter' %}" method="post">
+              {% csrf_token %}
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="exampleModalLongTitle" style="color: #2cef0e;">ACHAT DE CONTRAT</h4>
+                  <a class="close" data-dismiss="modal" aria-label="Close" style="color: #ef0e0e;">
+                    <i class="lni lni-close"></i>
+                  </a>
                 </div>
-                <!-- end card -->
-                <!-- ======= input style end ======= -->
-              </div>
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN XAF</h5>
-    
-              </div>
-              <div class="modal-body">
-                <p class="text-regular">Remplissez ce formulaire pour payer en XAF</p>
-                <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en XAF !!!!</p>
-                <p class="text-regular">Les Numeros possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
-                <p class="text-regular" style="color: #2cef0e;">Orange-money: xxxxxxxxxx</p>
-                <p class="text-regular" style="color: #2cef0e;">MTN-money: xxxxxxxxxxx</p>
-                <!-- input style start -->
-                <div class="card-style mb-30">
-                  <div class="input-style-1">
-                    <label>Le numero qui va payer</label>
-                    <input type="text" name="Numero" placeholder="+237 ..." />
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-2">
-                    <label>Montant XAF a payer</label>
-                    <input type="number" name="Montant" placeholder="Montant" />
-                    <span class="icon"> <i class="lni lni-money-location"></i> </span>
-                  </div>
-                  <!-- end input -->
-                  <div class="input-style-3">
-                    <input type="text"  disabled="true" placeholder="CONTRAT DE {{contrat.Montant}} XAF" />
-                  </div>
-                  <input type="text" hidden="true"  name="contrat" value="{{contrat.Montant}}">
-                  <!-- end input -->
-                  <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
-                      style="margin-bottom:5px" onclick="document.getElementById('btn{{contrat.id}}').click()">VALIDER</a>
-                    <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
-                  </div>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN USDT</h5>
+      
                 </div>
-                <!-- end card -->
-                <!-- ======= input style end ======= -->
+                <div class="modal-body">
+                  <p class="text-regular">Remplissez ce formulaire pour payer en USDT</p>
+                  <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en USDT !!!!</p>
+                  <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
+                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
+                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
+                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
+                  <!-- input style start -->
+                  <div class="card-style mb-30">
+                    <div class="input-style-1">
+                      <label>Votre Addresse de portefeuille</label>
+                      <input type="text" name="adresseUSDT" placeholder="Addresse BEP,ERC,..." />
+                    </div>
+                    <!-- end input -->
+                    <div class="input-style-2">
+                      <label>Montant USDT a payer</label>
+                      <input type="number" name="MontantUSDT" placeholder="MontantUSDT" />
+                      <span class="icon"> <i class="lni lni-money-location"></i> </span>
+                    </div>
+                    <!-- end input -->
+                    <div class="input-style-3">
+                      <input type="text"  value="XXXX USDT = XXXX XAF" disabled />
+                    </div>
+                   
+                    <!-- end input -->
+                    <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
+                        style="margin-bottom:5px">VALIDER</a>
+                      <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
+                    </div>
+                  </div>
+                  <!-- end card -->
+                  <!-- ======= input style end ======= -->
+                </div>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN XAF</h5>
+      
+                </div>
+                <div class="modal-body">
+                  <p class="text-regular">Remplissez ce formulaire pour payer en XAF</p>
+                  <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en XAF !!!!</p>
+                  <p class="text-regular">Les Numeros possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
+                  <p class="text-regular" style="color: #2cef0e;">Orange-money: xxxxxxxxxx</p>
+                  <p class="text-regular" style="color: #2cef0e;">MTN-money: xxxxxxxxxxx</p>
+                  <!-- input style start -->
+                  <div class="card-style mb-30">
+                    <div class="input-style-1">
+                      <label>Le numero qui va payer</label>
+                      <input type="text" name="Numero" placeholder="+237 ..." />
+                    </div>
+                    <!-- end input -->
+                    <div class="input-style-2">
+                      <label>Montant XAF a payer</label>
+                      <input type="number" name="Montant" placeholder="Montant" />
+                      <span class="icon"> <i class="lni lni-money-location"></i> </span>
+                    </div>
+                    <!-- end input -->
+                    <div class="input-style-3">
+                      <input type="text"  disabled="true" placeholder="CONTRAT DE {{contrat.Montant}} XAF" />
+                    </div>
+                    <input type="text" hidden="true"  name="contrat" value="{{contrat.Montant}}">
+                    <!-- end input -->
+                    <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
+                        style="margin-bottom:5px" onclick="document.getElementById('btn{{contrat.id}}').click()">VALIDER</a>
+                      <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
+                    </div>
+                  </div>
+                  <!-- end card -->
+                  <!-- ======= input style end ======= -->
+                </div>
+                <div class="modal-footer">
+                  <h4>MERCI DE NOUS FAIRE CONFIANCE</h4>
+                </div>
               </div>
-              <div class="modal-footer">
-                <h4>MERCI DE NOUS FAIRE CONFIANCE</h4>
-              </div>
-            </div>
-            <button type="submit" id="btn{{contrat.id}}" hidden="true"></button>
-          </form>
-        
+              <button type="submit" id="btn{{contrat.id}}" hidden="true"></button>
+            </form>
+          
+          </div>
         </div>
-      </div>
-      <!-- end modalmodal-->
+        <!-- end modalmodal-->
+      {% endif %}
+        
     {% endfor %}
 
     <!-- End Col -->

@@ -35,7 +35,7 @@ def index(request):
         totalUsers=len(allUtilisateurs2)
         for util in allUtilisateurs:
             
-            if util.contrat_courant:
+            if util.contrat_courant and not util.contrat_expire:
                 
                 totalContrats+=util.contrat_courant.Montant
             
@@ -225,6 +225,14 @@ def refuserTransaction(request,id):
 
     return redirect('transactions')
 
+
+def SupprimerMessage(request , id):
+    # Pour valider une transaction
+    if not request.user.is_superuser:
+        return redirect('intro')
+    message=get_object_or_404(Message,id=id)
+    message.delete()
+    return redirect("messages") 
 
 
 

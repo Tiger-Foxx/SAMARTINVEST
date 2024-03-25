@@ -31,6 +31,7 @@ urlpatterns = [
     path('profile/<str:nom>',profile,name='profile'),
     path('notifications/',notifications,name='notifications'),
     path('messages/',messages,name='messages'),
+    path('Supprimermessages/<str:id>',SupprimerMessage,name='Supprimermessages'),
     path('parrainage/<str:nom>',parrainage,name='parrainage'),
     path('help/',help,name='help'),
     path('transactions/',transactions,name='transactions'),

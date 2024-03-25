@@ -54,8 +54,9 @@
                  MESSAGE ADMINISTRATEUR : <a href="#0">{{mes.NomAuteur}}</a>
                </p>
                <p class="text-sm text-medium">
-                LE : <a href="#0">{{mes.date}}</a>
+                LE : {{mes.date}} <a href="{% url 'Supprimermessages' mes.id %}"> <i class="lni lni-ban" title="supprimer" style="color: red; margin-left:15px" ></i></a> 
               </p>
+              
              </div>
            </div>
            <div class="card-image" style="padding: 15px;">
