@@ -15,11 +15,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-import environ
 
 
-env = environ.Env()
-environ.Env.read_env(env_file=str(BASE_DIR / "SmartInvest" / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -29,8 +26,8 @@ environ.Env.read_env(env_file=str(BASE_DIR / "SmartInvest" / ".env"))
 SECRET_KEY = 'django-insecure-)o!g70&28ajh$#3=69bf9ml^k@@uy^5bm#f!pz!k0terp_9&-x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG")
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+DEBUG = True
+ALLOWED_HOSTS = ["127.0.0.1:8000" ,"SmartInvest.pythonanywhere.com","127.0.0.1"]
 
 
 # Application definition
