@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)o!g70&28ajh$#3=69bf9ml^k@@uy^5bm#f!pz!k0terp_9&-x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1:8000" ,"SmartInvest.pythonanywhere.com","127.0.0.1"]
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,7 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 AUTH_USER_MODEL = 'ComptesSmart.Utilisateur'
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'aidepyApp/static'
+STATIC_ROOT = BASE_DIR /'SmartInvestApp/static'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -128,3 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL="/media/"
 MEDIA_ROOT= BASE_DIR / "media"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
