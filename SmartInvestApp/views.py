@@ -144,7 +144,8 @@ def acheter(request):
     contrats=Contrat.objects.all().order_by('Montant')
     notificationss=Notification.objects.all().order_by('-date')[:4]
     Messagess=Message.objects.all().order_by('-date') [:5]
-    return render(request,'SmartInvestApp/AcheterCOntrat.html',context={'contrats' : contrats,'notificationss' : notificationss,"Messagess" : Messagess})
+    infos=get_object_or_404(Information,id=1)
+    return render(request,'SmartInvestApp/AcheterCOntrat.html',context={'contrats' : contrats,'notificationss' : notificationss,"Messagess" : Messagess,"infos" :infos})
 
 def retrait(request):
     notificationss=Notification.objects.all().order_by('-date')[:4]

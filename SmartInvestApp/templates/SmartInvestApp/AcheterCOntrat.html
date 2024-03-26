@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load static %}
-
+{% load calcul_filters %}
 
 <!-- ========== section start ========== -->
 <section class="section">
@@ -84,20 +84,20 @@
             {% if contrat.Montant < 30000 %}
             <h3 class="text-bold mb-10" style="color: #2cef0e;">{{contrat.Montant}} XAF</h3>
             <p class="text-sm text-success">
-              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{contrat.pourcentage}}%
-              <span class="text-gray">Benefices/jour</span>
+              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{contrat.pourcentage}}%/
+              <span class="text-gray">jour(50 jours)</span>
             </p>
-            {% elif contrat.Montant < 1500000 %}
+            {% elif contrat.Montant < 280000 %}
             <h3 class="text-bold mb-10" style="color: #efc90e;">{{contrat.Montant}} XAF</h3>
             <p class="text-sm text-warning">
-              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +2%
-              <span class="text-gray">Benefices/jours</span>
+              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{contrat.pourcentage}}%/
+              <span class="text-gray">jour(50 jours)</span>
             </p>
             {% else %}
             <h3 class="text-bold mb-10" style="color: #ef0e0e;">{{contrat.Montant}} XAF</h3>
             <p class="text-sm text-warning">
-              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +2%
-              <span class="text-gray">Benefices/jours</span>
+              <i class='bx bx-up-arrow-alt bx-fade-up'></i> +{{contrat.pourcentage}}%/
+              <span class="text-gray">jour(50 jours)</span>
             </p>
             {% endif %}
               
@@ -128,36 +128,36 @@
                   </a>
                 </div>
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN USDT</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">POUR PAYER EN USDT(BEP20)</h5>
       
                 </div>
                 <div class="modal-body">
-                  <p class="text-regular">Remplissez ce formulaire pour payer en USDT</p>
+                  <p class="text-regular">Remplissez ce formulaire pour payer en USDT(BEP20)</p>
                   <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en USDT !!!!</p>
                   <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
-                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
-                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
-                  <p class="text-regular" style="color: #2cef0e;">BEP-20: xxxxxxxxxxxxxxxxxxxxx</p>
+                  <p class="text-regular" style="color: #2cef0e;">BEP-20: {{infos.BEP20}}</p>
                   <!-- input style start -->
                   <div class="card-style mb-30">
                     <div class="input-style-1">
                       <label>Votre Addresse de portefeuille</label>
-                      <input type="text" name="adresseUSDT" placeholder="Addresse BEP,ERC,..." />
+                      <input type="text" name="adresseUSDT" placeholder="Addresse BEP20..." />
                     </div>
                     <!-- end input -->
-                    <div class="input-style-2">
+                    <div class="input-style-2" hidden="true">
                       <label>Montant USDT a payer</label>
-                      <input type="number" name="MontantUSDT" placeholder="MontantUSDT" />
+                      <input type="number" name="MontantUSDT"  value="{{ contrat.Montant|ConvertirUSDT:infos.prixUSDT }}" placeholder="MontantUSDT" />
                       <span class="icon"> <i class="lni lni-money-location"></i> </span>
                     </div>
+                    
                     <!-- end input -->
                     <div class="input-style-3">
-                      <input type="text"  value="XXXX USDT = XXXX XAF" disabled />
+                      <input type="text"  value="{{contrat.Montant}} XAF = {{ contrat.Montant|ConvertirUSDT:infos.prixUSDT }} USDT" disabled />
                     </div>
                    
                     <!-- end input -->
-                    <div class="row"><a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
-                        style="margin-bottom:5px">VALIDER</a>
+                    <div class="row">
+                      <a href="#" class="main-btn primary-btn-outline square-btn btn-hover"
+                        style="margin-bottom:5px" onclick="document.getElementById('btn{{contrat.id}}').click()">VALIDER</a>
                       <a href="#" class="main-btn danger-btn-outline square-btn btn-hover" data-dismiss="modal">ANULER</a>
                     </div>
                   </div>
@@ -172,8 +172,8 @@
                   <p class="text-regular">Remplissez ce formulaire pour payer en XAF</p>
                   <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en XAF !!!!</p>
                   <p class="text-regular">Les Numeros possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
-                  <p class="text-regular" style="color: #2cef0e;">Orange-money: xxxxxxxxxx</p>
-                  <p class="text-regular" style="color: #2cef0e;">MTN-money: xxxxxxxxxxx</p>
+                  <p class="text-regular" style="color: #ef610e;">Orange-money:  {{infos.OM}}</p>
+              <p class="text-regular" style="color: #efd10e;">MTN-money:  {{infos.MTN}}</p>
                   <!-- input style start -->
                   <div class="card-style mb-30">
                     <div class="input-style-1">
@@ -181,9 +181,9 @@
                       <input type="text" name="Numero" placeholder="+237 ..." />
                     </div>
                     <!-- end input -->
-                    <div class="input-style-2">
+                    <div class="input-style-2" hidden="true">
                       <label>Montant XAF a payer</label>
-                      <input type="number" name="Montant" placeholder="Montant" />
+                      <input type="text" name="Montant"  value="{{contrat.Montant}}" placeholder="Montant" />
                       <span class="icon"> <i class="lni lni-money-location"></i> </span>
                     </div>
                     <!-- end input -->
@@ -206,14 +206,14 @@
               </div>
               <button type="submit" id="btn{{contrat.id}}" hidden="true"></button>
             </form>
-          
+         
           </div>
         </div>
         <!-- end modalmodal-->
       {% endif %}
         
     {% endfor %}
-
+    
     <!-- End Col -->
 
   </div>

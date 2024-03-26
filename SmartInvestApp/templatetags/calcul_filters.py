@@ -15,3 +15,8 @@ def soustraire_pourcentage(value, percentage):
 @register.filter(name='calculer_pourcentage')
 def calculer_pourcentage(montant, pourcentage):
     return montant * pourcentage / 100
+
+@register.filter(name='ConvertirUSDT')
+def ConvertirUSDT(prix,prixUSDT):
+    
+     return float(int((float(prix)/float(prixUSDT))*100))/100

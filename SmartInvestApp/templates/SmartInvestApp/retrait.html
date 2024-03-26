@@ -59,11 +59,14 @@
           <h6 class="mb-25">FORMULAIRE DE RETRAIT</h6>
           <div class="input-style-1">
             <label>MONTANT DU RETRAIT(XAF)</label>
-            <input type="number" name="Montant" onchange="ConvertUSDT()" onkeypress="ConvertUSDT()" placeholder="0000000" required />
+            <input type="number" name="Montant"   placeholder="0000000" required />
           </div>
           <div class="input-style-1">
             <label  id="MontUSDTLabel" style="color:#f5d402"> XXXXXX XAF = XXXXX USDT</label>
             <input type="text" name="MontantUSDT" id="MontUSDT" hidden="true" placeholder=""  />
+          </div>
+          <div class="input-style-1">
+            <a href="#0" onclick="ConvertUSDT()" class="main-btn warning-btn-outline square-btn btn-hover">VOIR LA CONVERSION</a>
           </div>
           <!-- end input -->
           <div class="input-style-1">

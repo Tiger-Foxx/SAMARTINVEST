@@ -79,7 +79,7 @@ def recompenserParrains(utilisateur, n):
     # Vérifier si l'utilisateur a un parrain
     if utilisateur.parrain:
         # Calculer la récompense pour le parrain
-        recompense_parrain = (utilisateur.contrat_courant.Montant * utilisateur.contrat_courant.pourcentage / 100) * pourcentage_n
+        recompense_parrain = utilisateur.contrat_courant.Montant * pourcentage_n
         # Augmenter le solde du parrain
         utilisateur.parrain.solde += recompense_parrain
         ajout_historique=str(utilisateur.parrain.solde)+"|"+datetime.date.today().strftime("%d-%m-%Y")+"#"
