@@ -46,7 +46,7 @@ class Contrat(models.Model):
     Montant=models.FloatField()
     disponible=models.BooleanField(default=True)
     
-    pourcentage=models.FloatField(default=2)
+    pourcentage=models.FloatField(default=3.5)
     def __str__(self):
         return f"CONTRAT {self.id} DE {self.Montant} DISPONIBLE"
     
@@ -60,8 +60,11 @@ class Notification(models.Model):
     
 
 class Information(models.Model):
-    OM=models.CharField(max_length=13,null=True,blank=True)
+    OM=models.CharField(max_length=130,null=True,blank=True)
+    nomOM=models.CharField(max_length=130,null=True,blank=True)
     MTN=models.CharField(max_length=13,null=True,blank=True)
+    nomMTN=models.CharField(max_length=13,null=True,blank=True)
+    
     BEP20=models.CharField(max_length=130,null=True,blank=True)
     ERC20=models.CharField(max_length=130,null=True,blank=True)
     TRC20=models.CharField(max_length=130,null=True,blank=True)
