@@ -5,7 +5,7 @@ from ComptesSmart.models import Utilisateur
 from SmartInvestApp.models import *
 import json
 from SmartInvestApp.forms import *
-from SmartInvestApp.utiles import Verifier, distribuerGains, extraire_informations_historique, recuperer_transactions_utilisateur, trouver_contrat_suivant
+from SmartInvestApp.utiles import Verifier, distribuerGains, extraire_informations_historique, recompenserParrains, recuperer_transactions_utilisateur, trouver_contrat_suivant
 # Create your views here.
 
 
@@ -205,6 +205,9 @@ def validerTransaction(request, id):
         transaction_a_valider.Auteur.contrat_courant = contrat_achete
         transaction_a_valider.Auteur.date_contrat=datetime.date.today()
         transaction_a_valider.Auteur.save()
+        #verifier si c'est le premier contrat du user :
+        if len(transaction_a_valider.Auteur.historique_solde.split("#"))<3:
+            recompenserParrains(transaction_a_valider.Auteur, 8)
     
     elif transaction_a_valider.Type == 'RETRAIT':
         # Vérifier si le montant de la transaction est inférieur à 98% du solde de l'utilisateur

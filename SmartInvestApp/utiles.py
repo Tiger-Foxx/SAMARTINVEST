@@ -123,9 +123,7 @@ def distribuerGains(pourcentage=3.5, jours=0, montant_minimum=0):
 
     # Mise à jour du solde des utilisateurs éligibles et création de notifications
     for utilisateur in utilisateurs_eligibles:
-        #verifier si c'est le premier contrat du user :
-        if len(utilisateur.historique_solde.split("#"))<3:
-            recompenserParrains(utilisateur, 8)
+        
        
         montant_bonus = utilisateur.contrat_courant.Montant * pourcentage / 100
         utilisateur.solde += montant_bonus
