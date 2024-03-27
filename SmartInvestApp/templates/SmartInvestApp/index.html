@@ -266,8 +266,21 @@
              <div class="modal-body">
                <p class="text-regular">Remplissez ce formulaire pour payer en USDT(BEP20)</p>
                <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en USDT !!!!</p>
-               <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement sont:</p>
-               <p class="text-regular" style="color: #2cef0e;">BEP-20: {{infos.BEP20}}</p>
+               <p class="text-regular">Veuilliez copier notre adresse BEP-20 ci dessous , vous y ferez le virement:
+              </p>
+              <div class="container" style="margin: 10px;">
+                <div class="input-group">
+                  <span class="input-group-addon hidden-xs linkname" style="padding: 10px;">
+                    <strong>BEP-20</strong>
+                  </span>
+                  <span id="copyButton" class="input-group-addon btn" title="Click to copy">
+                    <i class="lni lni-clipboard" aria-hidden="true"></i>
+                  </span>
+                  <input type="text" id="copyTarget" class="form-control" value="{{infos.BEP20}}">
+                  <span class="copied" style="font-size: 8px;" >Texte à Copier !</span>
+                </div>
+              </div>
+              <!-- input style start -->
                <!-- input style start -->
                <div class="card-style mb-30">
                  <div class="input-style-1">
@@ -283,7 +296,7 @@
                  
                  <!-- end input -->
                  <div class="input-style-3">
-                   <input type="text"  value="{{contrat_suivant.Montant}} XAF = {{ contrat_suivant.Montant|ConvertirUSDT:infos.prixUSDT }} USDT" disabled />
+                   <input type="text" style="font-size: 10px;" value="{{contrat_suivant.Montant}} XAF = {{ contrat_suivant.Montant|ConvertirUSDT:infos.prixUSDT }} USDT" disabled />
                  </div>
                 
                  <!-- end input -->
@@ -320,7 +333,7 @@
                  </div>
                  <!-- end input -->
                  <div class="input-style-3">
-                   <input type="text"  disabled="true" placeholder="CONTRAT DE {{contrat_suivant.Montant}} XAF" />
+                   <input type="text"  disabled="true" style="font-size: 10px;" placeholder="CONTRAT DE {{contrat_suivant.Montant}} XAF" />
                  </div>
                  <input type="text" hidden="true"  name="contrat" value="{{contrat_suivant.Montant}}">
                  <!-- end input -->

@@ -135,26 +135,37 @@
             <p class="text-regular">Remplissez ce formulaire pour payer en USDT(BEP20)</p>
             <p class="text-regular" style="color:#EF0E0E">NB: Laissez tous ces champs vides si vous ne Payez pas en
               USDT !!!!</p>
-            <p class="text-regular">Les Addresses possibles de Smart Invest aux-quelles effectuer les virement sont:
+            <p class="text-regular">Veuilliez copier notre adresse BEP-20 ci dessous , vous y ferez le virement:
             </p>
-            <p class="text-regular" style="color: #ef0e0e;font-size:10px;font-weight:900">BEP-20: {{infos.BEP20}}</p>
+            <div class="container" style="margin: 10px;">
+              <div class="input-group">
+                <span class="input-group-addon hidden-xs linkname" style="padding: 10px;">
+                  <strong>BEP-20</strong>
+                </span>
+                <span id="copyButton" class="input-group-addon btn" title="Click to copy">
+                  <i class="lni lni-clipboard" aria-hidden="true"></i>
+                </span>
+                <input type="text" id="copyTarget" class="form-control" value="{{infos.BEP20}}">
+                <span class="copied" style="font-size: 8px;" >Texte à Copier !</span>
+              </div>
+            </div>
             <!-- input style start -->
             <div class="card-style mb-30">
               <div class="input-style-1">
-                <label>Votre Addresse de portefeuille</label>
+                <label>Votre Addresse de portefeuille (BEP20)</label>
                 <input type="text" name="adresseUSDT" placeholder="Addresse BEP20..." />
               </div>
               <!-- end input -->
               <div class="input-style-2" hidden="true">
                 <label>Montant USDT a payer</label>
-                <input type="number" name="MontantUSDT" value="{{ contrat.Montant|ConvertirUSDT:infos.prixUSDT }}"
+                <input type="number" name="MontantUSDT"  value="{{ contrat.Montant|ConvertirUSDT:infos.prixUSDT }}"
                   placeholder="MontantUSDT" />
                 <span class="icon"> <i class="lni lni-money-location"></i> </span>
               </div>
    
               <!-- end input -->
               <div class="input-style-3">
-                <input type="text"
+                <input type="text" style="font-size:10px;"
                   value="{{contrat.Montant}} XAF = {{ contrat.Montant|ConvertirUSDT:infos.prixUSDT }} USDT"
                   disabled />
               </div>
@@ -194,7 +205,7 @@
               </div>
               <!-- end input -->
               <div class="input-style-3">
-                <input type="text" disabled="true" placeholder="CONTRAT DE {{contrat.Montant}} XAF" />
+                <input type="text" disabled="true" style="font-size:10px;" placeholder="CONTRAT DE {{contrat.Montant}} XAF" />
               </div>
               <input type="text" hidden="true" name="contrat" value="{{contrat.Montant}}">
               <!-- end input -->
