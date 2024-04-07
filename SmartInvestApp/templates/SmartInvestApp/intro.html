@@ -20,23 +20,24 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
 </head>
-<header>
-    
-  <img src="{% static 'assets/images/home/images/LOGO.jpg' %}" alt="LOGO" id="header-logo">
-      
-  <nav class="header-nav">
 
-      <ul class="nav-link">
-        <li><a href="#">Présentation</a></li>
-        <li><a href="{% url 'help' %}">Aide</a></li>
-        <li><a href="{% url 'connexion' %}">Inscription</a></li>
-        <li><a href="{% url 'inscription' %}">Connexion</a></li>
-      </ul>
-
-  </nav>
-
-</header>
 <body>
+  <header>
+    
+    <img src="{% static 'assets/images/home/images/LOGO.jpg' %}" alt="LOGO" id="header-logo">
+        
+    <nav class="header-nav">
+  
+        <ul class="nav-link">
+          <li><a href="#">Présentation</a></li>
+          <li><a href="{% url 'help' %}">Aide</a></li>
+          <li><a href="{% url 'connexion' %}">Inscription</a></li>
+          <li><a href="{% url 'inscription' %}">Connexion</a></li>
+        </ul>
+  
+    </nav>
+  
+  </header>
 
     <div class="first-div">
 
@@ -49,7 +50,8 @@
             <p>Bienvenue chez Smart invest, une plateforme pionnière dans le domaine des investissements alimentés par l'intelligence
             artificielle (IA). Nous sommes fiers de présenter une approche innovante qui maximise les bénéfices pour nos clients.</p>
         </div>
-        <a href="{% url 'connexion' %}"><button class="first-start-button">C'est parti</button></a>
+       <button class="first-start-button" onclick="document.getElementById('connect').click()">C'est parti</button>
+       <a href="{% url 'connexion' %}" id="connect" hidden="true"></a>
         
 
     </div>
@@ -113,36 +115,37 @@
     </div>
     
     
-</body>
-
 <footer>
 
-    <div class="footer-first-container">
+  <div class="footer-first-container">
 
-        <div class="first-first-container">
-            <p>Pour plus d'informations, vous pourrez consulter la session 'Aide' de l'application où vous pouvez naviguer dès
-            maintenant</p>
-            <p>Lien internet de l'applicaiton: <a href="{% url 'index' %}">SAMRT INVEST </a></p>
-        </div>
-        <div class="first-second-container">
-            <p>Nos réseaux sociaux</p>
-            <div class="social-media-container">
-                <a href=""><i class='bx bxl-facebook'></i></a>
-                <a href=""><i class='bx bxl-linkedin'></i></a>
-                <a href=""><i class='bx bxl-google'></i></a>
-            </div>
-        </div>
+      <div class="first-first-container">
+          <p>Pour plus d'informations, vous pourrez consulter la session 'Aide' de l'application où vous pouvez naviguer dès
+          maintenant</p>
+          <p>Lien internet de l'applicaiton: <a href="{% url 'index' %}">SAMRT INVEST </a></p>
+      </div>
+      <div class="first-second-container">
+          <p>Nos réseaux sociaux</p>
+          <div class="social-media-container">
+              <a href=""><i class='bx bxl-facebook'></i></a>
+              <a href=""><i class='bx bxl-linkedin'></i></a>
+              <a href=""><i class='bx bxl-google'></i></a>
+          </div>
+      </div>
 
-    </div>
-    <div class="footer-second-container">
+  </div>
+  <div class="footer-second-container">
 
-        <p>Inscris-toi et rejoins notre communauté</p>
-        <button><a href="{% url 'inscription' %}">S'inscrire</a></button>
+      <p>Inscris-toi et rejoins notre communauté</p>
+      <button><a href="{% url 'inscription' %}">S'inscrire</a></button>
 
 
-    </div>
-    <div class="footer-third-container">@ 2024 Copyright: FOX <a href="https://fox-s.netlify.app">https://fox-s.netlify.app"</a></div>
+  </div>
+  <div class="footer-third-container">@ 2024 Copyright: FOX <a href="https://fox-s.netlify.app">https://fox-s.netlify.app"</a></div>
 
 </footer>
 <script src="{% static 'assets/js/home/script.js' %}" defer></script>
+    
+</body>
+
 </html>
